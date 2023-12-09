@@ -1,4 +1,4 @@
-let playerText = document.getElementById('playerText')
+let thinger = document.getElementById('thinger')
 let restartBtn = document.getElementById('restartBtn')
 let boxes = Array.from(Array.from(document.getElementsByClassName('box')))
 let games = Array.from(Array.from(document.getElementsByClassName('gameboard')))
@@ -33,9 +33,15 @@ function boxClicked(e) {
         const tempbigid = parseInt(e.target.parentNode.id.slice(1,2), 10)
         const tempsmolid = parseInt(e.target.id, 10) - 9*tempbigid
         
-    console.log(spaces[tempsmolid].toString().replace(/\,/g, ''))
+    
     if(!spaces[tempbigid][tempsmolid] && (tempbigid == lastid || lastid == null) && (spaces[tempsmolid].toString().replace(/\,/g, '').length != 9 || !(spaces[tempsmolid].toString() != "X,X,X,X,X,X,X,X,X" && spaces[tempsmolid].toString() != "O,O,O,O,O,O,O,O,O"))){
-        playerText.innerHTML = 'Noughts and Crosses'
+        if(currentPlayer == X_TEXT){
+        thinger.innerHTML = O_TEXT + "'s turn"
+        e.target.style.color = 'cyan'
+        } else {
+        thinger.innerHTML = X_TEXT + "'s turn"
+        e.target.style.color = 'orange'
+        }
         const bigid = parseInt(e.target.parentNode.id.slice(1,2), 10)
         const smolid = parseInt(e.target.id, 10) - 9*bigid
         spaces[bigid][smolid] = currentPlayer
@@ -53,7 +59,7 @@ function boxClicked(e) {
                 
                 
                 spaces[bigid].fill(currentPlayer)
-                playerText.innerHTML = `${currentPlayer} has won a square`
+                thinger.innerHTML = `${currentPlayer} has won a square`
                 
                 for (let i=0; i<9; i++)  {
                     
@@ -62,13 +68,19 @@ function boxClicked(e) {
                     
                     
                     document.getElementById(idddd.toString()).style.backgroundColor = ''
-                    
+                    if(currentPlayer == X_TEXT){
+                        
+                        document.getElementById(idddd.toString()).style.color = 'cyan'
+                        } else {
+                        
+                        document.getElementById(idddd.toString()).style.color = 'orange'
+                        }
                     
                     
                     
                 }
                 if(playerHasWon()){
-                    playerText.innerHTML = `${currentPlayer} has won`
+                    thinger.innerHTML = `${currentPlayer} has won`
                     game = false
                 }
 
@@ -97,7 +109,7 @@ function boxClicked(e) {
                 lastid = null
             }
             
-        e.target.style.backgroundColor = 'navy'
+        e.target.style.backgroundColor = 'gray'
     }
     
 }
@@ -165,9 +177,10 @@ function restart() {
     boxes.forEach( box => {
         box.innerText = ''
         box.style.backgroundColor=''
+        box.style.color=''
     })
     
-    playerText.innerHTML = 'Noughts and Crosses'
+    thinger.innerHTML = 'Noughts and Crosses'
 
     currentPlayer = X_TEXT
 }
