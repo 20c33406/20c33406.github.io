@@ -2,13 +2,15 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    background-color: hsl(0, 0%, 15%);
+    color: lightgray;
 }
 
 :root {
-    --orange: hsla(42, 100%, 67%, 0.849);
-    --darkorange: hsla(42, 100%, 50%, 0.836);
+    --orange: hsla(234, 4%, 54%, 0.849);
+    --darkorange: hsl(0, 0%, 63%);
     --winning-blocks: hsl(201, 25%, 24%);
-    --available-blocks: #1dbdee63;
+    --available-blocks: #70868d63;
     
 }
 body {
@@ -22,12 +24,12 @@ h1 {
 
 .container {
     padding: 40px;
-    height: 100vh;
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    background-color: hsl(199, 25%, 29%);
+    background-color: hsl(0, 0%, 15%);
 }
 
 #biggameboard {
@@ -88,7 +90,7 @@ button {
     padding: 10px 20px;
     border-radius: 10px;
     background-color: var(--orange);
-    color: hsl(0, 0%, 20%);
+    color: hsl(0, 0%, 100%);
     border-color: var(--orange);
     font-size: 18px;
     transition: 200ms transform;
