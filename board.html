@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Noughts and Crosses</title>
+    
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Finger+Paint&display=swap" rel="stylesheet"> 
+</head>
+<body>
+    <div class="container" id="container">
+        <h1 id="playerText">Noughts and Crosses</h1>
+        <h2 id="thinger">Play?</h2>
+        <br>
+        <button id="restartBtn">Restart</button>
+        
+        <div id="biggameboard">
+            <div class="gameboard" id="g0">
+                <div  class="box" class="b0" id="0"></div>
+                <div  class="box" class="b0" id="1"></div>
+                <div  class="box" class="b0" id="2"></div>
+                <div  class="box" class="b0" id="3"></div>
+                <div  class="box" class="b0" id="4"></div>
+                <div  class="box" class="b0" id="5"></div>
+                <div  class="box" class="b0" id="6"></div>
+                <div  class="box" class="b0" id="7"></div>
+                <div  class="box" class="b0" id="8"></div>
+            </div>
+            <div class="gameboard" id="g1">
+                <div class="box" class="b1" id="9"></div>
+                <div class="box" class="b1" id="10"></div>
+                <div class="box" class="b1" id="11"></div>
+                <div class="box" class="b1" id="12"></div>
+                <div class="box" class="b1" id="13"></div>
+                <div class="box" class="b1" id="14"></div>
+                <div class="box" class="b1" id="15"></div>
+                <div class="box" class="b1" id="16"></div>
+                <div class="box" class="b1" id="17"></div>
+            </div>
+            <div class="gameboard" id="g2">
+                <div class="box" class="b2" id="18"></div>
+                <div class="box" class="b2" id="19"></div>
+                <div class="box" class="b2" id="20"></div>
+                <div class="box" class="b2" id="21"></div>
+                <div class="box" class="b2" id="22"></div>
+                <div class="box" class="b2" id="23"></div>
+                <div class="box" class="b2" id="24"></div>
+                <div class="box" class="b2" id="25"></div>
+                <div class="box" class="b2" id="26"></div>
+            </div>
+            <div class="gameboard" id="g3">
+                <div class="box" class="b3" id="27"></div>
+                <div class="box" class="b3" id="28"></div>
+                <div class="box" class="b3" id="29"></div>
+                <div class="box" class="b3" id="30"></div>
+                <div class="box" class="b3" id="31"></div>
+                <div class="box" class="b3" id="32"></div>
+                <div class="box" class="b3" id="33"></div>
+                <div class="box" class="b3" id="34"></div>
+                <div class="box" class="b3" id="35"></div>
+            </div>
+            <div class="gameboard" id="g4">
+                <div class="box" class="b4" id="36"></div>
+                <div class="box" class="b4" id="37"></div>
+                <div class="box" class="b4" id="38"></div>
+                <div class="box" class="b4" id="39"></div>
+                <div class="box" class="b4" id="40"></div>
+                <div class="box" class="b4" id="41"></div>
+                <div class="box" class="b4" id="42"></div>
+                <div class="box" class="b4" id="43"></div>
+                <div class="box" class="b4" id="44"></div>
+            </div>
+            <div class="gameboard" id="g5">
+                <div class="box" class="b5" id="45"></div>
+                <div class="box" class="b5" id="46"></div>
+                <div class="box" class="b5" id="47"></div>
+                <div class="box" class="b5" id="48"></div>
+                <div class="box" class="b5" id="49"></div>
+                <div class="box" class="b5" id="50"></div>
+                <div class="box" class="b5" id="51"></div>
+                <div class="box" class="b5" id="52"></div>
+                <div class="box" class="b5" id="53"></div>
+            </div>
+            <div class="gameboard" id="g6">
+                <div class="box" class="b6" id="54"></div>
+                <div class="box" class="b6" id="55"></div>
+                <div class="box" class="b6" id="56"></div>
+                <div class="box" class="b6" id="57"></div>
+                <div class="box" class="b6" id="58"></div>
+                <div class="box" class="b6" id="59"></div>
+                <div class="box" class="b6" id="60"></div>
+                <div class="box" class="b6" id="61"></div>
+                <div class="box" class="b6" id="62"></div>
+            </div>
+            <div class="gameboard" id="g7">
+                <div class="box" class="b7" id="63"></div>
+                <div class="box" class="b7" id="64"></div>
+                <div class="box" class="b7" id="65"></div>
+                <div class="box" class="b7" id="66"></div>
+                <div class="box" class="b7" id="67"></div>
+                <div class="box" class="b7" id="68"></div>
+                <div class="box" class="b7" id="69"></div>
+                <div class="box" class="b7" id="70"></div>
+                <div class="box" class="b7" id="71"></div>
+            </div>
+            <div class="gameboard" id="g8">
+                <div class="box" class="b8" id="72"></div>
+                <div class="box" class="b8" id="73"></div>
+                <div class="box" class="b8" id="74"></div>
+                <div class="box" class="b8" id="75"></div>
+                <div class="box" class="b8" id="76"></div>
+                <div class="box" class="b8" id="77"></div>
+                <div class="box" class="b8" id="78"></div>
+                <div class="box" class="b8" id="79"></div>
+                <div class="box" class="b8" id="80"></div>
+            </div>
+
+            
+        </div>
+            
+        
+    </div>
+    <script src="/game_logic.js"></script>
+</body>
+</html>
