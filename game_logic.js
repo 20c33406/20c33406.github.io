@@ -1,3 +1,6 @@
+const http = require("http");
+const sockets = require("socket.io");
+
 let thinger = document.getElementById('thinger')
 let restartBtn = document.getElementById('restartBtn')
 let boxes = Array.from(Array.from(document.getElementsByClassName('box')))
