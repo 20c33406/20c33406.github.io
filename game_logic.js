@@ -1,5 +1,4 @@
-const http = require("http");
-const sockets = require("socket.io");
+
 
 let thinger = document.getElementById('thinger')
 let restartBtn = document.getElementById('restartBtn')
