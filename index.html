@@ -4,6 +4,9 @@
     <title>Online Connection Page</title>
     <link rel="stylesheet" href="style.css">
     <script>
+        function oneScreen(){
+            window.location.href = "board.html";
+        }
         function joinRoom() {
             var username = document.getElementById("username").value;
             var room = document.getElementById("room").value;
@@ -14,7 +17,7 @@
     </script>
 </head>
 <body>
-    <h1>Welcome to the Room</h1>
+    <h1>Noughts and Crosses</h1>
     
     <form onsubmit="joinRoom(); return false;">
         <label for="username">Username:</label>
@@ -24,6 +27,7 @@
         <input type="text" id="room" name="room" required>
         
         <button type="submit">Join Room</button>
+        <button type="button" onclick="oneScreen()">One Screen</button>
     </form>
 </body>
 </html>
