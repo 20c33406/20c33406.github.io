@@ -12,7 +12,7 @@
     </form>
     <script>
         // Connect to the Socket.IO server
-        var socket = io('http://localhost:3000');
+        var socket = io('http://localhost:5500');
 
         // Send a message when the form is submitted
         document.getElementById('messageForm').addEventListener('submit', function(event) {
@@ -24,7 +24,6 @@
 
         // Display incoming messages
         socket.on('message', function(message) {
-            console.log('Received message:', message);
             var messagesDiv = document.getElementById('messages');
             messagesDiv.innerHTML += '<p>' + message + '</p>';
         });

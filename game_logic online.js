@@ -1,30 +1,24 @@
-// Import the Socket.io library
-const io = require('socket.io')();
+import express from 'express';
+import { createServer } from 'http';
+import { Server } from 'socket.io';
 
-// Create a socket server
-const server = io.listen(3000);
+const app = express();
+const server = createServer(app);
+const io = new Server(server);
 
-// Store connected clients
-const clients = {};
+io.on('connection', (socket) => {
+    console.log('a user connected');
 
-// Event handler for new connections
-server.on('connection', (socket) => {
-    // Store the connected client
-    clients[socket.id] = socket;
-
-    // Event handler for receiving messages
-    socket.on('message', (data) => {
-        // Broadcast the message to all connected clients except the sender
-        Object.keys(clients).forEach((clientId) => {
-            if (clientId !== socket.id) {
-                clients[clientId].emit('message', data);
-            }
-        });
+    socket.on('message', (msg) => {
+        console.log('message: ' + msg);
+        io.emit('message', msg);
     });
 
-    // Event handler for disconnections
     socket.on('disconnect', () => {
-        // Remove the disconnected client from the list
-        delete clients[socket.id];
+        console.log('user disconnected');
     });
+});
+
+server.listen(5500, () => {
+    console.log('listening on *:5500');
 });
