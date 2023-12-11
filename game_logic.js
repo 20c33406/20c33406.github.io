@@ -36,7 +36,7 @@ function boxClicked(e) {
         const tempsmolid = parseInt(e.target.id, 10) - 9*tempbigid
         
     
-    if(!spaces[tempbigid][tempsmolid] && (tempbigid == lastid || lastid == null) && (spaces[tempsmolid].toString().replace(/\,/g, '').length != 9 || !(spaces[tempsmolid].toString() != "X,X,X,X,X,X,X,X,X" && spaces[tempsmolid].toString() != "O,O,O,O,O,O,O,O,O"))){
+        if(!spaces[tempbigid][tempsmolid] && (tempbigid == lastid || lastid == null || spaces[tempsmolid].toString().replace(/\,/g, '').length == 9)){
         if(currentPlayer == X_TEXT){
         thinger.innerHTML = O_TEXT + "'s turn"
         e.target.style.color = 'cyan'
@@ -103,12 +103,13 @@ function boxClicked(e) {
             document.getElementById(idddd.toString()).style.backgroundColor = ''
             
             
-            if (spaces[smolid].toString() != "X,X,X,X,X,X,X,X,X" && spaces[smolid].toString() != "O,O,O,O,O,O,O,O,O") {
+            if (spaces[tempsmolid].toString().replace(/\,/g, '').length != 9) {
             document.getElementById(idd.toString()).style.backgroundColor = availableColour
             
             lastid = smolid
             } else {
                 lastid = null
+                console.log('full')
             }
             
         e.target.style.backgroundColor = 'gray'
