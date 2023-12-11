@@ -50,7 +50,7 @@ function boxClicked(e) {
         e.target.innerText = currentPlayer
         
         
-            if(playerHasWonSquare(bigid.toString()) !== false){
+            if(playerHasWonSquare(bigid) !== false){
                 
                 for (let i=0; i<9; i++)  {
                     idd = bigid * 9 + i
@@ -65,7 +65,7 @@ function boxClicked(e) {
                 
                 for (let i=0; i<9; i++)  {
                     
-                    idddd = lastid * 9 + i
+                    idddd = bigid * 9 + i
                     
                     
                     
@@ -103,7 +103,7 @@ function boxClicked(e) {
             document.getElementById(idddd.toString()).style.backgroundColor = ''
             
             
-            if (spaces[tempsmolid].toString().replace(/\,/g, '').length != 9) {
+            if (spaces[smolid].toString().replace(/\,/g, '').length != 9) {
             document.getElementById(idd.toString()).style.backgroundColor = availableColour
             
             lastid = smolid

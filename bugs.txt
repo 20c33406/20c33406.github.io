@@ -1,1 +1,0 @@
-When you go from a full square and complete a new one it doesn't do the colours right
