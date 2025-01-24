@@ -22,6 +22,7 @@
 body {
     color: var(--dark-text-color);
     font-family: 'Finger Paint', cursive;
+    zoom: 68%;
 }
 
 h1 {
