@@ -21,17 +21,28 @@ const winningCombos = [
     [2, 4, 6]
 ];
 
+const highlightAll = () => {
+    for (let j = 0; j < 81; j++) {
+        
+        document.getElementById(j.toString()).classList.add('available');
+    }
+}
+
 const startGame = () => {
     boxes.forEach(box => box.addEventListener('click', boxClicked));
+    restartBtn.addEventListener('click', restart);
+    restartBtn.removeEventListener('click', startGame);
+
 };
 
 const boxClicked = (e) => {
     if (!game) return;
-
+    restartBtn.innerText = 'Restart Game';
     const tempbigid = parseInt(e.target.parentNode.id.slice(1, 2), 10);
     const tempsmolid = parseInt(e.target.id, 10) - 9 * tempbigid;
 
-    if (!spaces[tempbigid][tempsmolid] && (tempbigid === lastid || lastid === null || spaces[tempsmolid].every(val => val !== null))) {
+    if (!spaces[tempbigid][tempsmolid] && (tempbigid === lastid || lastid === null || (spaces[tempsmolid].every(val => val !== null)) && tempbigid === lastid)) {
+       
         updatePlayerTurn(e);
         spaces[tempbigid][tempsmolid] = currentPlayer;
         e.target.innerText = currentPlayer;
@@ -61,7 +72,8 @@ const markSquareAsWon = (bigid) => {
         document.getElementById(id.toString()).style.color = currentPlayer === X_TEXT ? 'DodgerBlue' : 'orange';
     }
     spaces[bigid].fill(currentPlayer);
-    thinger.innerHTML = `${currentPlayer} has won a square`;
+    thinger.innerHTML = `${currentPlayer} has won a square`; 
+    thinger.innerHTML = currentPlayer === X_TEXT ? `${O_TEXT}'s turn` : `${X_TEXT}'s turn`;
     
 };
 
@@ -123,11 +135,17 @@ const restart = () => {
     });
     thinger.innerHTML = 'Noughts and Crosses';
     currentPlayer = X_TEXT;
+
+    for (let j = 0; j < 81; j++) {
+        
+        document.getElementById(j.toString()).classList.add('available');
+    }
 };
 
 const isFilled = (num) => {
     return spaces[num].every(val => val !== null);
 };
 
-restartBtn.addEventListener('click', restart);
+restartBtn.addEventListener('click', highlightAll);
 startGame();
+
