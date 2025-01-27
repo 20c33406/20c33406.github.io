@@ -78,6 +78,16 @@ const markSquareAsWon = (bigid) => {
 };
 
 const highlightAvailableMoves = (smolid) => {
+    if (!game) {
+        alert('Game over');
+        for (let j = 0; j < 81; j++) {
+          
+                document.getElementById(j.toString()).classList.remove('available');
+            
+            
+        }
+        return;
+    }
     for (let j = 0; j < 81; j++) {
         document.getElementById(j.toString()).style.backgroundColor = '';
         
