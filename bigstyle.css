@@ -1,0 +1,111 @@
+:root {
+    --cell-size: 1.35vw; /* Adjusted for viewport width */
+    --outer-cell-size: calc(var(--cell-size) * 3); /* 3 cells + 2 borders */
+    --massive-cell-size: calc(var(--outer-cell-size) * 3 + 0.5vw); /* 3 outer cells + 6 borders */
+    --background-color: hsl(210, 36%, 96%);
+    --border-color: hsl(204, 70%, 53%);
+    --hover-background-color: #f0f0f0; /* Default hover background color */
+    --primary-color: hsl(204, 86%, 53%);
+    --secondary-color: hsl(204, 70%, 53%);
+    --dark-background-color: hsl(210, 36%, 12%);
+    --dark-text-color: hsl(210, 22%, 89%);
+    --dark-border-color: hsl(204, 70%, 30%);
+    --dark-highlight-color: hsl(204, 86%, 43%);
+    --highlight-color: hsl(208, 33%, 20%);
+    --text-color: hsl(210, 22%, 49%);
+    --available-blocks: hsl(204, 86%, 53%);
+    --font-size: 1.5vw; /* Font size adjusted for viewport width */
+}
+
+body {
+    font-family: 'Finger Paint', cursive;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-size: var(--font-size); /* Apply viewport-based font size */
+}
+
+.massive-grid {
+    display: grid;
+    grid-template-columns: repeat(3, var(--massive-cell-size));
+    max-width: 100vw; /* Ensure it doesn't overflow the viewport width */
+    overflow: hidden; /* Hide any overflow */
+    background-color: var(--background-color);
+    
+}
+
+.outer-grid {
+    display: grid;
+    grid-template-columns: repeat(3, var(--outer-cell-size));
+    border: 0.3vw solid var(--border-color); /* Adjusted for viewport width */
+
+}
+
+.inner-grid {
+    display: grid;
+    grid-template-columns: repeat(3, var(--cell-size));
+    border: 0.1vw solid var(--border-color); /* Adjusted for viewport width */
+    padding: 0;
+ /* Remove horizontal gap between cells */
+}
+
+.cell {
+    width: var(--cell-size);
+    height: var(--cell-size);
+    border: 0.1vw solid var(--border-color); /* Adjusted for viewport width */
+    display: grid;
+    align-content: center;
+    text-align: center;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.cell.available {
+    background-color: var(--available-blocks);
+    border: 0.1vw solid var(--border-color); /* Adjusted for viewport width */
+}
+
+.cell:hover {
+    background-color: var(--hover-background-color); /* Light gray background on hover */
+    transform: scale(1.05);
+}
+
+/* Media query for smaller screens */
+@media (max-width: 600px) {
+    :root {
+        --cell-size: 3.5vw; /* Increase cell size for smaller screens */
+        --font-size: 3.5vw; /* Increase font size for smaller screens */
+    }
+}
+
+/* Dark mode styles */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --background-color: hsl(210, 36%, 12%); /* Dark background color */
+        --border-color: hsl(204, 70%, 30%); /* Light border color */
+        --hover-background-color: #555; /* Darker gray background on hover */
+        --text-color: hsl(210, 22%, 89%);
+    }
+}
+
+button {
+    border-radius: 10px;
+    background-color: var(--primary-color);
+    color: hsl(0, 0%, 100%);
+    border: none;
+    font-size: 1.5vw; /* Font size adjusted for viewport width */
+    transition: transform 0.2s, background-color 0.2s;
+    font-weight: 600;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: var(--secondary-color);
+    transform: scale(1.05);
+}

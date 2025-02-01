@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3x3 Grid of 3x3 Grids</title>
+    <link type: css rel="stylesheet" href="bigstyle.css">
+    <style>
+        #site-title {
+       transition: background-color 200ms ease-in-out;
+       &:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+       }
+        }
+      </style>
+      <div class="header-title" data-animation-role="header-element">
+        
+    </div>
+    <style>
+        #site-title:hover {
+            background-color: rgba(77, 77, 197, 0.5) !important;
+            transform: translateY(-10px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Finger+Paint&display=swap" rel="stylesheet"> 
+</head>
+<body>
+
+    
+        <p id="thinger">Turn Status
+        <br>
+        <button id="restartBtn" style="width:80px;height:40px;font-size:10px;font-family: 'Finger Paint', cursive;">Play</button>
+        </p>
+    <div class="massive-grid" id="massive-grid"></div>
+
+    <script>
+        const massiveGrid = document.getElementById('massive-grid');
+        let val = 0
+        for (let i = 0; i < 9; i++) {
+            const outerGrid = document.createElement('div');
+            outerGrid.className = 'outer-grid';
+            outerGrid.id = `outer-grid-${i}`;
+
+            for (let j = 0; j < 9; j++) {
+                const innerGrid = document.createElement('div');
+                innerGrid.className = 'inner-grid';
+                innerGrid.id = `grid-${j}`;
+
+                for (let k = 0; k < 9; k++) {
+                    idname = toString(val)
+                    const cell = document.createElement('div');
+                    cell.className = 'cell';
+                    cell.id = `${val}`;
+                    innerGrid.appendChild(cell);
+                    val++
+                }
+
+                outerGrid.appendChild(innerGrid);
+            }
+
+            massiveGrid.appendChild(outerGrid);
+        }
+    </script>
+
+    </div>
+    <script src="/bigboard.js"></script>
+</body>
+</html>
