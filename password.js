@@ -69,6 +69,7 @@ function checkPasswordStrength(input){
     // Check if there are only numbers
     if(!upper && !lower && numb && !spec){
         score -= 5
+        
     }
     // Check if there are only special characters
     if(!upper && !lower && !numb && spec){
