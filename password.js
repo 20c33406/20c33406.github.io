@@ -16,7 +16,7 @@ let qwerty = [
     ["z", "x", "c", "v", "b", "n", "m"]
 ]
 
-chars =  "abcdefghijklmnopqrstuvwxyz!$%^&*()_+=-1234567890"
+chars =  "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!$%^&*()_+=-1234567890"
 
 
 // Function to return the score of a password
