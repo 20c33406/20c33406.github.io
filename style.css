@@ -4,6 +4,7 @@
     box-sizing: border-box;
     background-color: var(--dark-background-color);
     color: var(--dark-text-color);
+    user-select: none; /* Standard syntax */
 }
 
 :root {
