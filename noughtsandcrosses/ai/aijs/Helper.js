@@ -1,16 +1,16 @@
-//      
-import * as noughtsAndCrosses from './Game.js';
+   
+const noughtsAndCrosses = require('./Game');
 
-const randomChoice = (choices) => {
+exports.randomChoice = (choices) => {
   const index = Math.floor(Math.random() * choices.length);
   return choices[index];
 }
 
-const getArrayFromIndex = (columnIndex, value) => (
+exports.getArrayFromIndex = (columnIndex, value) => (
   new Array(7).fill(0).map((_, index) => (index === columnIndex ? value : 0))
 )
 
-const boardToConvolutionalVol = (board, playerId) => {
+exports.boardToConvolutionalVol = (board, playerId) => {
   const opponentId = playerId === 1 ? 2 : 1;
     const vol = {
       sx: 6,
@@ -34,7 +34,7 @@ const boardTo1DArrayFiltered = (board, playerId) => {
   ), []);
 }
 
-const boardTo1DArrayFormatted = (board, playerId) => {
+exports.boardTo1DArrayFormatted = (board, playerId) => {
   return board.reduce((array, line) => array.concat(
     line.map((cellValue) => {
       if (cellValue === 0) return 0;
@@ -44,7 +44,7 @@ const boardTo1DArrayFormatted = (board, playerId) => {
   ), []);
 }
 
-const evaluateLearning = (network) => {
+exports.evaluateLearning = (network) => {
   const benchMark = [];
   const game1 = new noughtsAndCrosses.Game();
   game1.playChip(1, 1);
@@ -83,7 +83,7 @@ const evaluateLearning = (network) => {
   return benchMark;
 }
 
-const evaluateLearningCNN = (network) => {
+exports.evaluateLearningCNN = (network) => {
   const benchMark = [];
   const game1 = new noughtsAndCrosses.Game();
   game1.chooseSpace(1, 1);
@@ -121,4 +121,4 @@ const evaluateLearningCNN = (network) => {
 
   return benchMark;
 }
-export * as Helper from "./Helper.js"
+module.exports = exports;

@@ -1,5 +1,6 @@
-//      
-import * as NeuralNetwork from './NeuralNetwork.js';
+
+const NeuralNetwork = require('./NeuralNetwork');
+
 
 exports.trainOnPreviousPlays = (
   networkType,

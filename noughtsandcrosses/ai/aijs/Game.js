@@ -261,4 +261,4 @@ class Game {
 
 
 
-export {Game}
+module.exports.Game = Game

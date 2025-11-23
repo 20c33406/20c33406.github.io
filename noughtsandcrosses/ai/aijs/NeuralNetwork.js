@@ -1,7 +1,8 @@
 //      
+// @flow
 const convnetjs = require("convnetjs");
 const deepqlearn = require('convnetjs/build/deepqlearn');
-import * as Helper from './Helper.js';
+const Helper = require('./Helper');
 
 const synaptic = require('synaptic');
 

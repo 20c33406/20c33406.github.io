@@ -1,7 +1,7 @@
 //      
-import * as noughtsAndCrosses from './Game.js';
-import * as Helper from './Helper.js';
-import * as NeuralNetwork from './NeuralNetwork.js';
+const noughtsAndCrosses = require('./Game');
+const Helper = require('./Helper');
+const NeuralNetwork = require('./NeuralNetwork');
 
 exports.playGame = (networkType, epsilon, myNetwork, display) => {
   let winnerBoardStates = [];

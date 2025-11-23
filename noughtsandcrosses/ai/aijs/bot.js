@@ -1,10 +1,13 @@
 // @flow
-import * as QLearning from './QLearning.js';
-import * as Play from './Play.js';
-import * as NeuralNetwork from './NeuralNetwork.js';
-import * as noughtsAndCrosses from './Game.js';
-import * as Helper from './Helper.js';
 
+
+
+const noughtsAndCrosses = require('./Game');
+const Helper = require('./Helper');
+const QLearning = require('./QLearning');
+const Play = require('./Play')
+const NeuralNetwork = require('./NeuralNetwork');
+const fs = require('fs');
 
 // -------------- PARAMETERS ---------------- //
 // type of neural network to train
@@ -63,4 +66,4 @@ const chooseMove = (playerIdToPlay, availableMoves, board) => {
 } 
 
 
-export {chooseMove}
+module.exports.chooseMove = chooseMove
