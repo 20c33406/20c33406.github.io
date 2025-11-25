@@ -12,6 +12,7 @@ const fs = require('fs');
 // -------------- PARAMETERS ---------------- //
 // type of neural network to train
 const NETWORK_TYPE = 'CNN';
+const networkType = 'CNN';
 // number of games to play
 const LEARN_TIMES = 1000;
 // learningRate is progressively decreased with the number of games until

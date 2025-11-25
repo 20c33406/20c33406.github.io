@@ -9,7 +9,6 @@
         "url": "https://github.com/AlexandreSi/connect4ai"
     },
     "dependencies": {
-        "browserify": "^17.0.1",
         "convnetjs": "^0.3.0",
         "eslint": "^4.17.0",
         "flow-remove-types": "^1.2.3",

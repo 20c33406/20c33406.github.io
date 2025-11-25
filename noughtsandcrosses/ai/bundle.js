@@ -689,6 +689,7 @@ const fs = require('fs');
 // -------------- PARAMETERS ---------------- //
 // type of neural network to train
 const NETWORK_TYPE = 'CNN';
+const networkType = 'CNN';
 // number of games to play
 const LEARN_TIMES = 1000;
 // learningRate is progressively decreased with the number of games until
@@ -766,7 +767,8 @@ let restartBtn = document.getElementById('restartBtn');
 
 let boxes = Array.from(document.getElementsByClassName('box'));
 
-
+let playsAsPlayer1 = []
+let playsAsPlayer2 = []
 let currentPlayer = 1
 
 
@@ -819,24 +821,28 @@ const boxClicked = (e) => {
     tempid = parseInt(e.target.id);
     game.chooseSpace(1,tempid)
     update()
- 
+    playsAsPlayer1.push(tempid)
 
-    let output = [];
-    let formattedBoard = NeuralNetwork.formatInput(networkType, game.board, playerIdToPlay);
-    let spaceId = bot.chooseMove(2, game.getAvailableIds(), game.board)
-    let playAgain = game.chooseSpace(2, spaceId);
-    console.log(spaceId )
-    if(playsAsPlayer1.includes(spaceId) || playsAsPlayer2.includes(spaceId)){playAgain=true};
+
+    
+    
+    
+  update()
+}
+
+const botPlace = () => {
+  let spaceId = bot.chooseMove(2, game.getAvailableIds(), game.board)
+  let playAgain = game.chooseSpace(2, spaceId);
+  if(!playsAsPlayer1.includes(spaceId) && !playsAsPlayer2.includes(spaceId)){
     // The same player may have to play again if the column he chose was full
-    if (!playAgain) {
+  
       // Save board states and plays
-      if (playerIdToPlay === 1) {
-        boardStatesAsPlayer1.push(formattedBoard);
-        playsAsPlayer1.push(spaceId);
-      } else if (playerIdToPlay === 2) {
-        boardStatesAsPlayer2.push(formattedBoard);
-        playsAsPlayer2.push(spaceId);
-      }
+      
+
+      
+   
+      playsAsPlayer2.push(spaceId);
+      
       
       // Check for wins
       const gameState = game.checkForWin();
@@ -846,10 +852,12 @@ const boxClicked = (e) => {
       console.log(game.getSpaceById(spaceId).bigid,game.getSpaceById(spaceId).smallid, spaceId, playerIdToPlay)
       console.log("------------------------")
       */
+
+      
       switch (gameState) {
-        case 0:
+        
           // Nobody won, switch player
-          playerIdToPlay = playerIdToPlay === 1 ? 2 : 1;
+          
           
         case -1:
           // Pat
@@ -867,9 +875,8 @@ const boxClicked = (e) => {
           break;
       }
     } else {
-        return
+      botPlace()
     }
-    update()
 }
 
 
