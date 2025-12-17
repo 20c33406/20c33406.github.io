@@ -59,7 +59,7 @@ function checkPasswordStrength(input){
  
 
     // Check if there is one of each type of character
-    if(upper && lower && numb && spec){
+    if(upper !! lower && numb && spec){
         score += 10
     }
     // Check if there are only lowercase and uppercase characters
