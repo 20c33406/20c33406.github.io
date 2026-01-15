@@ -68,13 +68,14 @@ const update = () => {
 
 
 const boxClicked = (e) => {
-    if (!on || currentPlayer==2) return;
-    restartBtn.innerText = 'Restart Game';
-    tempid = parseInt(e.target.id);
-    game.chooseSpace(1,tempid)
-    update()
-    playsAsPlayer1.push(tempid)
-
+  
+  if (!on || currentPlayer==2) return;
+  restartBtn.innerText = 'Restart Game';
+  tempid = parseInt(e.target.id);
+  game.chooseSpace(1,tempid)
+  update()
+  playsAsPlayer1.push(tempid)
+  botPlace()
 
     
     
@@ -125,9 +126,7 @@ const botPlace = () => {
           on = false
         default:
           break;
-      } else {
-        
-      }
+      } 
     } else {
       botPlace()
     }
@@ -135,7 +134,8 @@ const botPlace = () => {
 
 
 boxes.forEach(box => box.addEventListener('click', boxClicked));
-console.log("HELLO")
+
 const game = new noughtsAndCrosses.Game();
 
 update();
+
