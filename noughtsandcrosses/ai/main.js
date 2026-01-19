@@ -74,9 +74,10 @@ const boxClicked = (e) => {
   tempid = parseInt(e.target.id);
   game.chooseSpace(1,tempid)
   update()
+  console.log("Pre")
   playsAsPlayer1.push(tempid)
   botPlace()
-
+  console.log("post")
     
     
     
@@ -84,10 +85,11 @@ const boxClicked = (e) => {
 }
 
 const botPlace = () => {
+  
   let spaceId = bot.chooseMove(2, game.getAvailableIds(), game.board)
   let playAgain = game.chooseSpace(2, spaceId);
   if(!playsAsPlayer1.includes(spaceId) && !playsAsPlayer2.includes(spaceId)){
-    // The same player may have to play again if the column he chose was full
+    // The same player may have to play again if the column he chose was fu ll
   
       // Save board states and plays
       

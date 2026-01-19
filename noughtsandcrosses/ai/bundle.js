@@ -12,6 +12,7 @@ class space {
             this.bigid = bigid
             this.player = player
             this.available = available
+            this.lastPlaced = false
         }
     }
 class Game {
@@ -258,6 +259,14 @@ class Game {
       dw: new Float64Array(9 * 9 * 2).fill(0),
     }
     return vol;
+  }
+
+  setNewLastSpace(num){
+    for(let i=0;i<81;i++){
+      this.getSpaceById(i).lastPlaced=false
+      
+    }
+    this.getSpaceById(num).lastPlaced=true
   }
 }
 
@@ -809,29 +818,41 @@ const update = () => {
                  check.style.color = botColour
                  check.innerText = botText
             }
+
+            if(item.lastPlaced){
+                check.style.backgroundColor = "#FF0152";
+                
+                
+            } else if(item.available){
+                check.style.backgroundColor = "#223444";
+                check.classList.add('available');
+                
+            } else {
+                check.style.backgroundColor = "";
+                check.classList.remove('available');
+            }
             
     }
 }
 
 
 
-const boxClicked = (e) => {
-    if (!on || currentPlayer==2) return;
+const  boxClicked = (e) => {
+    
+    if (!on || currentPlayer==2 || game.getSpaceById(e.target.id).player != 0 || !game.getSpaceById(e.target.id).available) return;
     restartBtn.innerText = 'Restart Game';
     tempid = parseInt(e.target.id);
     game.chooseSpace(1,tempid)
-    update()
     playsAsPlayer1.push(tempid)
-
-
-    
-    
-    
-  update()
+    botPlace()
+    update()
 }
 
 const botPlace = () => {
   let spaceId = bot.chooseMove(2, game.getAvailableIds(), game.board)
+  if(game.getSpaceById(spaceId).player != 0 || !game.getSpaceById(spaceId).available){return botPlace()}
+  
+  game.setNewLastSpace(spaceId)
   let playAgain = game.chooseSpace(2, spaceId);
   if(!playsAsPlayer1.includes(spaceId) && !playsAsPlayer2.includes(spaceId)){
     // The same player may have to play again if the column he chose was full
@@ -874,14 +895,12 @@ const botPlace = () => {
         default:
           break;
       }
-    } else {
-      botPlace()
-    }
+    } 
 }
 
 
 boxes.forEach(box => box.addEventListener('click', boxClicked));
-console.log("HELLO")
+
 const game = new noughtsAndCrosses.Game();
 
 update();
