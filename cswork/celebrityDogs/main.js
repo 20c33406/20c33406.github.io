@@ -45,14 +45,21 @@ class Deck {
     }
 }
 
-
 class Player {
     constructor(name){
         this.name = name
         this.hand = []
     }
+    getTopCard(){
+        let temp = this.hand[0]
+        this.hand.splice(0,1)
+        return temp
+    }
 }
 
+class Bot extends Player{
+
+}
 
 
 
