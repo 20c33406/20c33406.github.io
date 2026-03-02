@@ -1,3 +1,5 @@
+// HTML tag references
+
 const exButton = document.getElementById("exButton")
 const exercise = document.getElementById("exercise")
 const intButton = document.getElementById("intButton")
@@ -37,9 +39,15 @@ const ended = document.getElementById("ended")
 const botWin = document.getElementById("botWin")
 const playerWin = document.getElementById("playerWin")
 
-const hiddenText = "REDACTED"
+// The text that is displayed if you can't see the opponents card yet
+
+const hiddenText = "Hidden"
+
+// The turn currently being taken. 0 is the player, 1 is the bot
+
 let turn = 0
 
+// The list of different names and types of dog that can be created 
 
 const dogs = [
     ["Annie","Afgan Hound"],
@@ -78,13 +86,14 @@ const dogs = [
 ["Oscar", "McDog"]
 ]
 
+// A function that creates a random number between 1 and the arguement (inclusive)
 
 function randNum(num){
     return Math.floor(Math.random()*num) + 1
 }
 
 
-
+// A class that creates an object with a name, type and stats
 
 class Card {
     constructor(name, type){
@@ -94,8 +103,11 @@ class Card {
         this.intelligence = randNum(100)
         this.friendliness = randNum(10)
         this.drool = randNum(10)
-        this.description = (`Name: ${this.name}\nExercise: ${this.exercise}\nIntelligence: ${this.intelligence}\nFriendliness: ${this.friendliness}\nDrool: ${this.drool}`)
+       
     }
+
+    // A method of the card class that compares the card it is in to the card in the arguement given a specific stat
+
     compare(card, stat){
         if(stat=="exercise"){
             return card.exercise<=this.exercise
@@ -109,6 +121,8 @@ class Card {
     }
 }
 
+// A class deck that creates a new deck of random cards with the length of the arguement
+
 class Deck {
     constructor(len){
         let tdogs=dogs
@@ -117,24 +131,22 @@ class Deck {
             
             let ind = Math.floor(Math.random()*tdogs.length)
             let ind2 = Math.floor(Math.random()*tdogs.length)
-            this.cards.push(new Card(tdogs[ind][0], tdogs[ind2][1]))
+            let newCard = new Card(tdogs[ind][0], tdogs[ind2][1])
+            this.cards.push(newCard)
             
 
         }
     }
-    takeRandom(){
-        let temp = Math.floor(Math.random()*dogs.length)
-        let tempcard = this.cards[temp]
-        this.cards.splice(temp,1)
-        return tempcard
-    }
+    
 }
+
+// A player class that has a hand attribute which is a stack that will contain the cards and a getTopCard method which takes the top card from the stack and an addCard method which adds a card to the stack.
 
 class Player {
     constructor(){
         
         this.hand = []
-        this.currentCard;
+        
        
     }
     getTopCard(){
@@ -147,9 +159,15 @@ class Player {
     }
     
 }
+
+// The code that executes after the player takes their turn
+
 function botTurn(){
     
     updateHTML()
+
+    // Delays the code by 5 seconds
+
     setTimeout(function() {
   
 
@@ -202,6 +220,9 @@ function botTurn(){
             updater.innerText = (`The bot's card's ${stat} was worse than yours so you won!`)
         }
     } 
+
+    // Checks if the game is over
+
     if(bot.hand.length==0){
         endGame(0)
         return
@@ -217,7 +238,11 @@ function botTurn(){
     botCardNumber.innerText= bot.hand.length
     }, 5000);
 }
+
+// The code that executes when the player picks a stat
+
 function playerTurn(stat){
+    // Returns if it is not the players turn.
     if(turn==1){
         return
     }
@@ -268,6 +293,8 @@ function playerTurn(stat){
             updater.innerText = (`Your card's ${stat} was not better than the bot's so you lost`)
         }
     } 
+
+    // Checks if the game is over
     if(bot.hand.length==0){
         endGame(0)
         return
@@ -280,6 +307,8 @@ function playerTurn(stat){
     playerCardNumber.innerText= player.hand.length
     botCardNumber.innerText= bot.hand.length
     
+    // Delays the code so the player can see why the lost/won before the bot plays
+
     setTimeout(function() {
         updateTurn("bot")
         botTurn()
@@ -290,6 +319,7 @@ function playerTurn(stat){
 
 }
 
+// updates the HTML to the current top card of the bot and the player
 
 function updateHTML(){
     
@@ -310,8 +340,10 @@ function updateHTML(){
 
 }
 
+// Updates the HTML to display the current player card and hides the bot card
 
 function updatePlayerHand(card){
+    console.log(player.hand[0])
     dogName.innerHTML = player.hand[0].name
     dogType.innerHTML = player.hand[0].type
     intelligence.innerHTML = card.intelligence
@@ -327,6 +359,8 @@ function updatePlayerHand(card){
     botdrool.innerHTML = hiddenText
 }
 
+// Updates the HTML to include the bot card stats
+
 function updateBotHand(card){
     botDogName.innerHTML = bot.hand[0].name
     botDogType.innerHTML = bot.hand[0].type
@@ -335,6 +369,8 @@ function updateBotHand(card){
     botfriendliness.innerHTML = card.friendliness
     botdrool.innerHTML = card.drool
 }
+
+// The code that displays the final screen of the game
 
 function endGame(won){
     mainGame.hidden = true
@@ -346,6 +382,7 @@ function endGame(won){
     }
 }
 
+// The code that runs the player turn when the different options for stats are clicked
 
 function exclick(){
     playerTurn("exercise")
@@ -359,13 +396,23 @@ function frclick(){
 function drclick(){
     playerTurn("drool")
 }
+
+// sends the cards from the deck to the players
+
 function sendCards(cards){
     let deck = new Deck(cards)
-    for(let i=0;i<cards/2;i++){
-        bot.addCard(deck.takeRandom())
-        player.addCard(deck.takeRandom())
+    let deckl = deck.cards.length
+    for(let i=0;i<deckl/2;i++){
+        let tcard = deck.cards.splice(0,1)
+        bot.addCard(tcard)
+        tcard = deck.cards.splice(0,1)
+        player.addCard(tcard)
     }
+    
+    
 }
+
+// Changes the HTML when the turn changes
 
 function updateTurn(turnName){
     if(turn==0){
@@ -381,6 +428,19 @@ function updateTurn(turnName){
     
 }
 
+// Fixes a weird bug I have where the cards in the hands of the players would be the card object in an array. This takes it out
+
+function fixHands (){
+    for(let i=0;i<player.hand.length;i++){
+        player.hand[i] = player.hand[i][0]
+    }
+    for(let i=0;i<bot.hand.length;i++){
+        bot.hand[i] = bot.hand[i][0]
+    }
+}
+
+// Creates the bot, player and sets the onclick functions for the stat selectors
+
 const bot = new Player()
 const player = new Player()
 exButton.onclick = exclick
@@ -388,9 +448,8 @@ intButton.onclick = intclick
 frButton.onclick = frclick
 drButton.onclick = drclick
 
-let form = document.getElementById("form");
-function handleForm(event) { event.preventDefault(); } 
-form.addEventListener('submit', onSubmitClick);
+// The code that exectutes when the number of total cards in the deck is submitted.
+
 function onSubmitClick(){
     
     mainGame.hidden = false
@@ -398,12 +457,11 @@ function onSubmitClick(){
     let cards = Number(document.getElementById("cardNum").value)
     
 
-    sendCards(cards)
+    sendCards(cards)  
+    fixHands()
     playerCardNumber.innerText= player.hand.length
     botCardNumber.innerText= bot.hand.length
     updatePlayerHand(player.hand[0])
 
 }
-
-
 
