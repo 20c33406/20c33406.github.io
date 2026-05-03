@@ -8,7 +8,7 @@ const gconst = 0.0007
 let gamespeed = 1
 let boosting = false
 let output = 0
-let restitution = 1
+let restitution = 0.1
 
 let c_down = false
 let a_down = false
@@ -77,24 +77,24 @@ class object {
             }
         }
     }
-    updatePos(){
-        this.pos.x += this.vel.X
-        this.pos.y += this.vel.Y
+    checkCollisions(){
+        
         for(let i=0;i<objects.length;i++){
             
             let object = objects[i]
             if(this.pos !== object.pos){
                 let dist = Math.sqrt(((this.pos.x-object.pos.x)**2 + (this.pos.y-object.pos.y)**2))
                 if(dist<this.size + object.size){
-                    let angle = 90+Math.atan2((object.pos.y-this.pos.y),(object.pos.x-this.pos.x))
+                    let angle = -Math.atan2((object.pos.y-this.pos.y),(object.pos.x-this.pos.x))
                     
                     let mat = [
                         [this.pos.x, this.vel.X],
                         [this.pos.y, this.vel.Y]
                     ]   
                     let rotatedMat = matMult(rotMat(angle),mat)
-                    rotatedMat[1][0] += 2*(dist - (this.size + object.size))
-                    rotatedMat[1][1] *= -restitution
+
+               
+                    rotatedMat[0][1] *= -restitution
                     let newMat = matMult(rotMat(-angle),rotatedMat)
                     this.pos.x = newMat[0][0]
                     this.pos.y = newMat[1][0]
@@ -135,6 +135,10 @@ class object {
             }
         }
         
+    }
+    updatePos(){
+        this.pos.x += this.vel.X
+        this.pos.y += this.vel.Y
     }
     getNearestObject(){
         let smallestDistMass=-1;
@@ -362,8 +366,10 @@ function calculateRotation(){
 
 let objects = []
 let player = new object(1,400,100,0,0,0)
-objects.push(new object(1,1,570,300*10^9,0,0))
-objects.push(new object(10000,1,570,300*10^9,0,0))
+for(let i=0;i<10;i++){
+    objects.push(new object(Math.floor(Math.random()*40000),Math.floor(Math.random()*40000),570,300*10^9,0,0))
+}
+
 function matMult(m1,m2){
     return [
         [(m1[0][0]*m2[0][0])+(m1[0][1]*m2[1][0]),(m1[0][0]*m2[0][1])+(m1[0][1]*m2[1][1])],
@@ -407,13 +413,12 @@ function draw(time) {
             let object = objects[i]
             object.calculateGravity()
         }
-
-
-        
-        
-        
-
+        player.checkCollisions()
         player.updatePos()
+        for(let i=0;i<objects.length;i++){
+            let object = objects[i]
+            object.checkCollisions()
+        }
         for(let i=0;i<objects.length;i++){
             let object = objects[i]
             object.updatePos()
