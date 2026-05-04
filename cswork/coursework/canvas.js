@@ -8,7 +8,7 @@ const gconst = 0.0007
 let gamespeed = 1
 let boosting = false
 let output = 0
-let restitution = 0.1
+let restitution = 0.5
 
 let c_down = false
 let a_down = false
@@ -87,15 +87,20 @@ class object {
                 if(dist<this.size + object.size){
                     let angle = -Math.atan2((object.pos.y-this.pos.y),(object.pos.x-this.pos.x))
                     
-                    let mat = [
+                    let thismat = [
                         [this.pos.x, this.vel.X],
                         [this.pos.y, this.vel.Y]
                     ]   
-                    let rotatedMat = matMult(rotMat(angle),mat)
-
+                    let objmat = [
+                        [this.pos.x, this.vel.X],
+                        [this.pos.y, this.vel.Y]
+                    ]   
+                    let thisrotatedMat = matMult(rotMat(angle),thismat)
+                    let objrotatedMat = matMult(rotMat(angle),objmat)
                
-                    rotatedMat[0][1] *= -restitution
-                    let newMat = matMult(rotMat(-angle),rotatedMat)
+                    objrotatedMat[0][1] = -restitution * (thisrotatedMat[0][1])
+                    let newMat = matMult(rotMat(-angle),objrotatedMat)
+                    
                     this.pos.x = newMat[0][0]
                     this.pos.y = newMat[1][0]
                     this.vel.X = newMat[0][1]
@@ -365,10 +370,9 @@ function calculateRotation(){
 
 
 let objects = []
-let player = new object(1,400,100,0,0,0)
-for(let i=0;i<10;i++){
-    objects.push(new object(Math.floor(Math.random()*40000),Math.floor(Math.random()*40000),570,300*10^9,0,0))
-}
+let player = new object(-1000,0,100,1,0,0)
+objects.push(new object(0,0,570,300*10^9,0,0))
+objects.push(new object(10000,0,570,300*10^9,0,0))
 
 function matMult(m1,m2){
     return [
@@ -414,7 +418,8 @@ function draw(time) {
             object.calculateGravity()
         }
         player.checkCollisions()
-        player.updatePos()
+
+        // player.updatePos()
         for(let i=0;i<objects.length;i++){
             let object = objects[i]
             object.checkCollisions()

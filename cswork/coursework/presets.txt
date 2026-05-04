@@ -1,0 +1,13 @@
+let player = new object(400000000,0,100,0,0,0)
+objects.push(new object(0,0,6563000,180000000000000,0,0))
+objects.push(new object(385000000,0,1738000,12700000000000,0,1022))
+
+
+let player = new object(1,400,100,0,0,0)
+for(let i=0;i<10;i++){
+    objects.push(new object(Math.floor(Math.random()*40000),Math.floor(Math.random()*40000),570,300*10^9,0,0))
+}
+
+let player = new object(1,400,100,0,0,0)
+objects.push(new object(1,1,570,300*10^9,0,0))
+objects.push(new object(10000,1,570,300*10^9,0,0))
