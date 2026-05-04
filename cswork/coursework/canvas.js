@@ -8,7 +8,7 @@ const gconst = 0.0007
 let gamespeed = 1
 let boosting = false
 let output = 0
-let restitution = 0.5
+let restitution = 1
 
 let c_down = false
 let a_down = false
@@ -370,9 +370,10 @@ function calculateRotation(){
 
 
 let objects = []
-let player = new object(-1000,0,100,1,0,0)
-objects.push(new object(0,0,570,300*10^9,0,0))
-objects.push(new object(10000,0,570,300*10^9,0,0))
+let player = new object(1,400,100,0,0,0)
+for(let i=0;i<10;i++){
+    objects.push(new object(Math.floor(Math.random()*40000),Math.floor(Math.random()*40000),570,300*10^9,0,0))
+}
 
 function matMult(m1,m2){
     return [
