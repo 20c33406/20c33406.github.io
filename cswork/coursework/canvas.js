@@ -8,7 +8,7 @@ const gconst = 0.0007
 let gamespeed = 1
 let boosting = false
 let output = 0
-let restitution = 1
+let restitution = 0.1
 
 let c_down = false
 let a_down = false
@@ -41,6 +41,8 @@ let Y_pos = 0
 let newangle = 0
 let ogangle = 0
 let diff = 0
+
+
 
 const FRAMES_PER_SECOND = 60;  // Valid values are 60,30,20,15,10...
 // set the mim time to render the next frame
@@ -98,8 +100,8 @@ class object {
                     let thisrotatedMat = matMult(rotMat(angle),thismat)
                     let objrotatedMat = matMult(rotMat(angle),objmat)
                
-                    objrotatedMat[0][1] = -restitution * (thisrotatedMat[0][1])
-                    let newMat = matMult(rotMat(-angle),objrotatedMat)
+                    thisrotatedMat[0][1] = -((thisrotatedMat[0][1]*this.mass + objrotatedMat[0][1]*object.mass + restitution*(thisrotatedMat[0][1]*this.mass - objrotatedMat[0][1]*object.mass))/(object.mass+this.mass))
+                    let newMat = matMult(rotMat(-angle),thisrotatedMat)
                     
                     this.pos.x = newMat[0][0]
                     this.pos.y = newMat[1][0]
@@ -425,6 +427,7 @@ function draw(time) {
             let object = objects[i]
             object.checkCollisions()
         }
+        player.updatePos()
         for(let i=0;i<objects.length;i++){
             let object = objects[i]
             object.updatePos()
