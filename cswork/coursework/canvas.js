@@ -8,7 +8,7 @@ const gconst = 0.0007
 let gamespeed = 1
 let boosting = false
 let output = 0
-let restitution = 0.1
+let restitution = 1
 
 let c_down = false
 let a_down = false
@@ -66,48 +66,49 @@ class object {
         }
         
     }
-    calculateGravity(){
-        for(let i=0;i<objects.length;i++){
-            
-            let object = objects[i]
-            if(this.pos !== object.pos){
-                let magnitude = (object.mass*gconst)/((this.pos.x-object.pos.x)**2 + (this.pos.y-object.pos.y)**2)
-                let angle = Math.atan2((object.pos.y-this.pos.y),(object.pos.x-this.pos.x))
+    calculateGravity(object){
+        if(this.pos !== object.pos){
+            let magnitude = (object.mass*gconst)/((this.pos.x-object.pos.x)**2 + (this.pos.y-object.pos.y)**2)
+            let angle = Math.atan2((object.pos.y-this.pos.y),(object.pos.x-this.pos.x))
                 
-                this.vel.Y+=magnitude*Math.sin(angle)
-                this.vel.X+=magnitude*Math.cos(angle)
-            }
-        }
-    }
-    checkCollisions(){
-        
-        for(let i=0;i<objects.length;i++){
-            
-            let object = objects[i]
-            if(this.pos !== object.pos){
-                let dist = Math.sqrt(((this.pos.x-object.pos.x)**2 + (this.pos.y-object.pos.y)**2))
-                if(dist<this.size + object.size){
-                    let angle = -Math.atan2((object.pos.y-this.pos.y),(object.pos.x-this.pos.x))
-                    
-                    let thismat = [
-                        [this.pos.x, this.vel.X],
-                        [this.pos.y, this.vel.Y]
-                    ]   
-                    let objmat = [
-                        [this.pos.x, this.vel.X],
-                        [this.pos.y, this.vel.Y]
-                    ]   
-                    let thisrotatedMat = matMult(rotMat(angle),thismat)
-                    let objrotatedMat = matMult(rotMat(angle),objmat)
-               
-                    thisrotatedMat[0][1] = -((thisrotatedMat[0][1]*this.mass + objrotatedMat[0][1]*object.mass + restitution*(thisrotatedMat[0][1]*this.mass - objrotatedMat[0][1]*object.mass))/(object.mass+this.mass))
-                    let newMat = matMult(rotMat(-angle),thisrotatedMat)
-                    
-                    this.pos.x = newMat[0][0]
-                    this.pos.y = newMat[1][0]
-                    this.vel.X = newMat[0][1]
-                    this.vel.Y = newMat[1][1]
+            this.vel.Y+=magnitude*Math.sin(angle)
+            this.vel.X+=magnitude*Math.cos(angle)
 
+            object.vel.Y-=magnitude*Math.sin(angle)
+            object.vel.X-=magnitude*Math.cos(angle)
+        }
+        
+    }
+    checkCollisions(object){
+        let dist = Math.sqrt(((this.pos.x-object.pos.x)**2 + (this.pos.y-object.pos.y)**2))
+        if(dist<this.size + object.size){
+                let angle = -Math.atan2((object.pos.y-this.pos.y),(object.pos.x-this.pos.x))
+                
+                let thismat = [
+                    [this.pos.x, this.vel.X],
+                    [this.pos.y, this.vel.Y]                   
+                ]   
+                let objmat = [
+                    [object.pos.x, object.vel.X],
+                    [object.pos.y, object.vel.Y]
+                ]   
+                let thisrotatedMat = matMult(rotMat(angle),thismat)
+                let objrotatedMat = matMult(rotMat(angle),objmat)
+               
+                let thisNewV = ((thisrotatedMat[0][1]*this.mass + objrotatedMat[0][1]*object.mass + restitution*object.mass*(thisrotatedMat[0][1] - objrotatedMat[0][1]))/(object.mass+this.mass))
+                let objNewV = ((thisrotatedMat[0][1]*this.mass + objrotatedMat[0][1]*object.mass + restitution*this.mass*(objrotatedMat[0][1] - thisrotatedMat[0][1]))/(object.mass+this.mass))
+                
+                thisrotatedMat[0][1] = thisNewV
+                objrotatedMat[0][1] = objNewV
+                    
+                    
+                let newthismat = matMult(rotMat(-angle),thisrotatedMat)
+                let newobjmat = matMult(rotMat(-angle),objrotatedMat)
+                
+                this.vel.X = newthismat[0][1]
+                this.vel.Y = newthismat[1][1]
+                object.vel.X = newobjmat[0][1]
+                object.vel.Y = newobjmat[1][1]
 
 
 
@@ -140,9 +141,9 @@ class object {
                 
                 
             }
-        }
         
-    }
+        
+    
     updatePos(){
         this.pos.x += this.vel.X
         this.pos.y += this.vel.Y
@@ -186,14 +187,15 @@ function renderObjects(){
 
 
     for(let i=0;i<objects.length;i++){
-        let object = objects[i]
-        rocket.save()
-        rocket.translate(object.pos.x-player.pos.x+centerX,object.pos.y-player.pos.y+centerY)
-        rocket.beginPath()
-        rocket.arc(0,0,object.size,0,2*Math.PI)
-        rocket.fill()
-        rocket.restore()
-        
+        if(objects[i].mass!=0){
+            let object = objects[i]
+            rocket.save()
+            rocket.translate(object.pos.x-player.pos.x+centerX,object.pos.y-player.pos.y+centerY)
+            rocket.beginPath()
+            rocket.arc(0,0,object.size,0,2*Math.PI)
+            rocket.fill()
+            rocket.restore()
+        }
     }
     
 }
@@ -323,6 +325,21 @@ function calculateAcceleration(){
     */
 }
 
+function doObjectAccelerations(){
+    calculateAcceleration()
+    for(let i=0;i<objects.length;i++){
+        for(let j=i+1;j<objects.length;j++){
+            let curr = objects[i]
+            let that = objects[j]
+            curr.calculateGravity(that)
+            curr.checkCollisions(that)
+        }
+    }
+}
+
+
+
+
 function calculateRotation(){
     if (a_down){
         rotation -= rotspeed
@@ -372,9 +389,11 @@ function calculateRotation(){
 
 
 let objects = []
-let player = new object(1,400,100,0,0,0)
+let player = new object(1,400,100,0,10,0)
+objects.push(player)
 for(let i=0;i<10;i++){
-    objects.push(new object(Math.floor(Math.random()*40000),Math.floor(Math.random()*40000),570,300*10^9,0,0))
+    let rand = 1
+    objects.push(new object(Math.floor(Math.random()*40000),Math.floor(Math.random()*40000),rand*570,(rand**2)*300*10^9,10,0))
 }
 
 function matMult(m1,m2){
@@ -407,43 +426,19 @@ function draw(time) {
         rocket.restore()
         
     }
-    
-    
+    for(let times=0;times<gamespeed;times++){
+        
+        doObjectAccelerations()
+        for(let i=0;i<objects.length;i++){
+            objects[i].updatePos()
+        }
+    }
     calculateRotation()
     angle += rotation;
 
+    if (angle > Math.PI * 2) angle = 0;
 
-    for(let i=0;i<gamespeed;i++){
-        calculateAcceleration()
-        player.calculateGravity()
-        for(let i=0;i<objects.length;i++){
-            let object = objects[i]
-            object.calculateGravity()
-        }
-        player.checkCollisions()
-
-        // player.updatePos()
-        for(let i=0;i<objects.length;i++){
-            let object = objects[i]
-            object.checkCollisions()
-        }
-        player.updatePos()
-        for(let i=0;i<objects.length;i++){
-            let object = objects[i]
-            object.updatePos()
-        }
-        
-        if (angle > Math.PI * 2) angle = 0;
-
-    }
     
-    // Request next animation frame
-    if(time-lastFrameTime < (1000/60) * (60 / (FRAMES_PER_SECOND*gamespeed)) - (1000/60) * 0.5){ //skip the frame if the call is too early
-        requestAnimationFrame(draw);
-        return; // return as there is nothing to do
-    }
-    lastFrameTime = time; // remember the time of the rendered frame
-    // render the frame
     requestAnimationFrame(draw); // get next farme
 }
 
