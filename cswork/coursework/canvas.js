@@ -42,7 +42,8 @@ let newangle = 0
 let ogangle = 0
 let diff = 0
 
-
+let img = new Image();
+img.src="R.jpg";
 
 const FRAMES_PER_SECOND = 60;  // Valid values are 60,30,20,15,10...
 // set the mim time to render the next frame
@@ -412,6 +413,8 @@ function rotMat(angle){
 
 function draw(time) {
     rocket.clearRect(0, 0, canvas.width, canvas.height);
+    let pattern = rocket.createPattern(img, "no-repeat");
+    rocket.fillStyle = pattern;
     rocket.save()
     rocket.translate(centerX,centerY)
     rocket.scale(scale,scale)
