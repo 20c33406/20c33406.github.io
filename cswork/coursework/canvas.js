@@ -1,3 +1,4 @@
+
 let rotation = 0
 const rotspeed = 0.001
 let Y_Velocity = 10
@@ -8,7 +9,8 @@ const gconst = 0.0007
 let gamespeed = 1
 let boosting = false
 let output = 0
-let restitution = 1
+let restitution = 0.5
+
 
 let c_down = false
 let a_down = false
@@ -25,9 +27,10 @@ let arrowup_down = false
 
 const canvas = document.getElementById('myCanvas');
 const rocket = canvas.getContext('2d');
+const gamespeedValue = document.getElementById('gamespeedValue');
+const pingValue = document.getElementById('pingValue');
 
-
-let scale = 0.1;
+let scale = 0.005;
 const el = document.querySelector("body");
 
 
@@ -81,7 +84,8 @@ class object {
         
     }
     checkCollisions(object){
-        let dist = Math.sqrt(((this.pos.x-object.pos.x)**2 + (this.pos.y-object.pos.y)**2))
+        let dist = Math.hypot(this.pos.x-object.pos.x,this.pos.y-object.pos.y)
+        
         if(dist<this.size + object.size){
                 let angle = -Math.atan2((object.pos.y-this.pos.y),(object.pos.x-this.pos.x))
                 
@@ -95,12 +99,12 @@ class object {
                 ]   
                 let thisrotatedMat = matMult(rotMat(angle),thismat)
                 let objrotatedMat = matMult(rotMat(angle),objmat)
-               
-                let thisNewV = ((thisrotatedMat[0][1]*this.mass + objrotatedMat[0][1]*object.mass + restitution*object.mass*(thisrotatedMat[0][1] - objrotatedMat[0][1]))/(object.mass+this.mass))
-                let objNewV = ((thisrotatedMat[0][1]*this.mass + objrotatedMat[0][1]*object.mass + restitution*this.mass*(objrotatedMat[0][1] - thisrotatedMat[0][1]))/(object.mass+this.mass))
-                
-                thisrotatedMat[0][1] = thisNewV
-                objrotatedMat[0][1] = objNewV
+                let e = restitution;
+                let u1 = thisrotatedMat[0][1]
+                let u2 = objrotatedMat[0][1]
+
+                thisrotatedMat[0][1] = ((this.mass*u1 + object.mass*u2 - object.mass*e*(u1 - u2))/(this.mass + object.mass))
+                objrotatedMat[0][1] = ((this.mass*u1 + object.mass*u2 + this.mass*e*(u1 - u2))/(this.mass + object.mass))
                     
                     
                 let newthismat = matMult(rotMat(-angle),thisrotatedMat)
@@ -111,33 +115,6 @@ class object {
                 object.vel.X = newobjmat[0][1]
                 object.vel.Y = newobjmat[1][1]
 
-
-
-
-                    /*
-                    let massSum = this.mass + object.mass
-                    let impact = {x: object.pos.x - this.pos.x, y: object.pos.y - this.pos.y}
-                    let velDiff = {X: object.vel.X - this.vel.X, Y: object.vel.Y - this.vel.Y}
-                    let velDotImpact = impact.x * velDiff.X + impact.y * velDiff.Y
-                    let distance = Math.hypot(this.pos.x - object.pos.x, this.pos.y - object.pos.y)
-                    
-                    this.vel.X += impact.x * 2 * object.mass * velDotImpact / (massSum * distance * distance)
-                    this.vel.Y -= impact.y * 2 * object.mass * velDotImpact / (massSum * distance * distance)
-                    
-                    
-                    function resolveCollision (a, b) {
-                        let massSum = a.mass + b.mass
-                        let impact = { x: b.pos.x - a.pos.x, y: b.pos.y - a.pos.y }
-                        let velDiff = { x: b.vel.x - a.vel.x, y: b.vel.y - a.vel.y } 
-                        let velDotImpact = impact.x * velDiff.x + impact.y * velDiff.y
-                        let distance = Math.hypot(a.pos.x - b.pos.x, a.pos.y - b.pos.y)
-                        for (let xy of ['x', 'y']) {
-                            a.vel[xy] += impact[xy] * 2 * b.mass * velDotImpact / (massSum * distance * distance)
-                            b.vel[xy] += impact[xy] * -2 * a.mass * velDotImpact / (massSum * distance * distance)
-                        }
-                    }
-
-                    */
                 }
                 
                 
@@ -390,11 +367,11 @@ function calculateRotation(){
 
 
 let objects = []
-let player = new object(1,400,100,0,10,0)
-objects.push(player)
-for(let i=0;i<10;i++){
-    let rand = 1
-    objects.push(new object(Math.floor(Math.random()*40000),Math.floor(Math.random()*40000),rand*570,(rand**2)*300*10^9,10,0))
+let player = new object(1,400,100,0,0,0)
+
+for(let i=0;i<50;i++){
+    let rand = Math.random()
+    objects.push(new object(Math.floor(Math.random()*40000),Math.floor(Math.random()*40000),rand*570,(rand**2)*300*10^9,0,0))
 }
 
 function matMult(m1,m2){
@@ -429,6 +406,7 @@ function draw(time) {
         rocket.restore()
         
     }
+    console.log(performance.now())
     for(let times=0;times<gamespeed;times++){
         
         doObjectAccelerations()
@@ -436,6 +414,7 @@ function draw(time) {
             objects[i].updatePos()
         }
     }
+    
     calculateRotation()
     angle += rotation;
 
@@ -533,11 +512,13 @@ function decreaseTime(){
     gamespeed = gamespeed/2,1
     if(gamespeed<1){
         gamespeed = 1
+        gamespeedValue.innerText = gamespeed
     }
 }
 
 function increaseTime(){
     gamespeed = gamespeed*2
+    gamespeedValue.innerText = gamespeed
 }
 function switchMapMode(){
 

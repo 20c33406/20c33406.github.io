@@ -11,3 +11,6 @@ for(let i=0;i<10;i++){
 let player = new object(1,400,100,0,0,0)
 objects.push(new object(1,1,570,300*10^9,0,0))
 objects.push(new object(10000,1,570,300*10^9,0,0))
+
+performance = performance.now() - currentTime
+    pingValue.innerText = performance.toFixed(2) + "ms"
