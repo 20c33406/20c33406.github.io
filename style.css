@@ -47,3 +47,16 @@ nav a:hover {
 p {
   font-size: 20px;
 }
+a {
+  
+  color: white;
+  padding: 14px 16px;
+  margin-left:5px;
+  text-decoration: none;
+  border: 2px solid #cfcfcf;
+  border-radius: 20px;
+  background-color: #333333;
+  
+  font-size: 20px;
+  
+}
