@@ -18,7 +18,6 @@ body {
   width: 100%;
   border-radius: 20px;
 }
-
 .topnav a {
   position: sticky;
   display: block;
@@ -34,7 +33,6 @@ body {
   font-size: 20px;
   
 }
-
 nav a:hover {
   background-color: #111111;
 }

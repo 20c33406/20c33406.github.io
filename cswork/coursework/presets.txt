@@ -14,3 +14,38 @@ objects.push(new object(10000,1,570,300*10^9,0,0))
 
 performance = performance.now() - currentTime
     pingValue.innerText = performance.toFixed(2) + "ms"
+
+
+for(let i=0;i<50;i++){
+    let rand = Math.random()+1
+    objects.push(new object(Math.floor(Math.random()*100000),Math.floor(Math.random()*100000),570*rand,(rand**3)*300*10^9,0,0))
+}
+
+
+let angle = -Math.atan2((object.pos.y-this.pos.y),(object.pos.x-this.pos.x))
+                
+                let thismat = [
+                    [this.pos.x, this.vel.X],
+                    [this.pos.y, this.vel.Y]                   
+                ]   
+                let objmat = [
+                    [object.pos.x, object.vel.X],
+                    [object.pos.y, object.vel.Y]
+                ]   
+                let thisrotatedMat = matMult(rotMat(angle),thismat)
+                let objrotatedMat = matMult(rotMat(angle),objmat)
+                let e = restitution;
+                let u1 = thisrotatedMat[0][1]
+                let u2 = objrotatedMat[0][1]
+
+                thisrotatedMat[0][1] = ((this.mass*u1 + object.mass*u2 - object.mass*e*(u1 - u2))/(this.mass + object.mass))
+                objrotatedMat[0][1] = ((this.mass*u1 + object.mass*u2 + this.mass*e*(u1 - u2))/(this.mass + object.mass))
+                    
+                    
+                let newthismat = matMult(rotMat(-angle),thisrotatedMat)
+                let newobjmat = matMult(rotMat(-angle),objrotatedMat)
+                
+                this.vel.X = newthismat[0][1]
+                this.vel.Y = newthismat[1][1]
+                object.vel.X = newobjmat[0][1]
+                object.vel.Y = newobjmat[1][1]
