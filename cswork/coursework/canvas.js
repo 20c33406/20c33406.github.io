@@ -354,17 +354,17 @@ let objects = [];
 
 
 
-for(let i=0;i<25;i++){
+for(let i=0;i<1;i++){
     let rand = Math.random()+3
     let angle = Math.random()*Math.PI*2 - Math.PI
     let dist = Math.random()*100000
     objects.push(new object(Math.floor(Math.cos(angle)*dist),Math.floor(Math.sin(angle)*dist),4000*rand,(rand**3)*300*10^9,0,0))
 }
-for(let i=0;i<400;i++){
+for(let i=0;i<20;i++){
     let rand = Math.random()+0.5
     let angle = Math.random()*Math.PI*2 - Math.PI
-    let dist = Math.random()*1000000+100000
-    objects.push(new object(Math.floor(Math.cos(angle)*dist),Math.floor(Math.sin(angle)*dist),4000*rand,(rand**3)*300*10^9,-Math.floor(4500000000*Math.sin(angle)/dist),Math.floor(4500000000*Math.cos(angle)/dist)))
+    let dist = Math.random()*1000000
+    objects.push(new object(Math.floor(Math.cos(angle)*dist),Math.floor(Math.sin(angle)*dist),4000*rand,(rand**3)*300*10^9,-Math.floor(450000000000000*Math.sin(angle)/(dist**2)),Math.floor(450000000000000*Math.cos(angle)/(dist**2))))
 }
    
 
