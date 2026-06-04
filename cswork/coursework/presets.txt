@@ -22,30 +22,12 @@ for(let i=0;i<50;i++){
 }
 
 
-let angle = -Math.atan2((object.pos.y-this.pos.y),(object.pos.x-this.pos.x))
-                
-                let thismat = [
-                    [this.pos.x, this.vel.X],
-                    [this.pos.y, this.vel.Y]                   
-                ]   
-                let objmat = [
-                    [object.pos.x, object.vel.X],
-                    [object.pos.y, object.vel.Y]
-                ]   
-                let thisrotatedMat = matMult(rotMat(angle),thismat)
-                let objrotatedMat = matMult(rotMat(angle),objmat)
-                let e = restitution;
-                let u1 = thisrotatedMat[0][1]
-                let u2 = objrotatedMat[0][1]
-
-                thisrotatedMat[0][1] = ((this.mass*u1 + object.mass*u2 - object.mass*e*(u1 - u2))/(this.mass + object.mass))
-                objrotatedMat[0][1] = ((this.mass*u1 + object.mass*u2 + this.mass*e*(u1 - u2))/(this.mass + object.mass))
-                    
-                    
-                let newthismat = matMult(rotMat(-angle),thisrotatedMat)
-                let newobjmat = matMult(rotMat(-angle),objrotatedMat)
-                
-                this.vel.X = newthismat[0][1]
-                this.vel.Y = newthismat[1][1]
-                object.vel.X = newobjmat[0][1]
-                object.vel.Y = newobjmat[1][1]
+let player = new object(0,0,100,0,0,0)
+let objects = [];
+objects.push(player);
+for(let i=0;i<1000;i++){
+    let rand = Math.random()+0.5
+    let rand2 = Math.random()-0.5
+    let rand3 = Math.random()-0.5
+    objects.push(new object(Math.floor(rand3*100000),Math.floor(rand2*100000),570*rand,(rand**3)*300*10^9,-rand2*5000,rand3*5000))
+}

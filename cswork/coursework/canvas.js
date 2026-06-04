@@ -4,11 +4,11 @@ let Y_Velocity = 10;
 let X_Velocity = 0;
 const acceleration = 0.1; // The real life equivalent would be 60* this number
 const translation = 0.006;
-const gconst = 1;
+const gconst = 10000;
 let gamespeed = 1;
 let boosting = false;
 let output = 0;
-let restitution = 0.5;
+let restitution = 0.05;
 
 let c_down = false;
 let a_down = false;
@@ -68,7 +68,7 @@ class object {
   }
 
   calculateGravity(object) {
-    
+    if(Math.hypot(this.pos.x - object.pos.x, this.pos.y - object.pos.y) < this.size + object.size){return}
     if (this.pos !== object.pos) {
       let thismagnitude = (object.mass * gconst) / ((this.pos.x - object.pos.x) ** 2 + (this.pos.y - object.pos.y) ** 2);
       let objmagnitude = (this.mass * gconst) / ((this.pos.x - object.pos.x) ** 2 + (this.pos.y - object.pos.y) ** 2);
@@ -298,8 +298,9 @@ function doObjectAccelerations() {
     for (let j = i + 1; j < objects.length; j++) {
       let curr = objects[i];
       let that = objects[j];
-      curr.checkCollisions(that);
       curr.calculateGravity(that);
+      curr.checkCollisions(that);
+      
     }
   }
 }
@@ -348,15 +349,24 @@ function calculateRotation() {
 }
 
 
-let player = new object(1,400,100,0,10,0)
+let player = new object(0,0,100,0,0,0)
 let objects = [];
-objects.push(player);
-for(let i=0;i<50;i++){
-    let rand = Math.random()+0.5
-    let rand2 = Math.random()+0.5
-    let rand3 = Math.random()+0.5
-    objects.push(new object(Math.floor(Math.random()*100000),Math.floor(Math.random()*100000),570*rand,(rand**3)*300*10^9,rand3,rand2))
+
+
+
+for(let i=0;i<25;i++){
+    let rand = Math.random()+3
+    let angle = Math.random()*Math.PI*2 - Math.PI
+    let dist = Math.random()*100000
+    objects.push(new object(Math.floor(Math.cos(angle)*dist),Math.floor(Math.sin(angle)*dist),4000*rand,(rand**3)*300*10^9,0,0))
 }
+for(let i=0;i<400;i++){
+    let rand = Math.random()+0.5
+    let angle = Math.random()*Math.PI*2 - Math.PI
+    let dist = Math.random()*1000000+100000
+    objects.push(new object(Math.floor(Math.cos(angle)*dist),Math.floor(Math.sin(angle)*dist),4000*rand,(rand**3)*300*10^9,-Math.floor(4500000000*Math.sin(angle)/dist),Math.floor(4500000000*Math.cos(angle)/dist)))
+}
+   
 
 
 function matMult(m1, m2) {
@@ -396,7 +406,7 @@ function draw(time) {
     renderRocket();
     rocket.restore();
   }
-  console.log(performance.now());
+  
   for (let times = 0; times < gamespeed; times++) {
     doObjectAccelerations();
     player.updatePos();
