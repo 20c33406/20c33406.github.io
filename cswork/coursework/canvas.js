@@ -2,13 +2,14 @@ let rotation = 0;
 const rotspeed = 0.001;
 let Y_Velocity = 10;
 let X_Velocity = 0;
-const acceleration = 0.1; // The real life equivalent would be 60* this number
+const acceleration = 1; // The real life equivalent would be 60* this number
 const translation = 0.006;
-const gconst = 10000;
+let gconst = 1000;
 let gamespeed = 1;
 let boosting = false;
 let output = 0;
-let restitution = 0.05;
+let restitution = 0.5;
+let framems = 0;
 
 let c_down = false;
 let a_down = false;
@@ -27,6 +28,10 @@ const canvas = document.getElementById("myCanvas");
 const rocket = canvas.getContext("2d");
 const gamespeedValue = document.getElementById("gamespeedValue");
 const pingValue = document.getElementById("pingValue");
+const gravityVal = document.getElementById("gravityVal");
+const gravitySlider = document.getElementById("myRange");
+const gravityButton = document.getElementById("gravityButton");
+
 
 let scale = 0.005;
 const el = document.querySelector("body");
@@ -42,8 +47,38 @@ let newangle = 0;
 let ogangle = 0;
 let diff = 0;
 
+
+
 let img = new Image();
-img.src = "R.jpg";
+img.src = "asteroids/ast1.png";
+let img1 = new Image();
+img1.src = "asteroids/ast2.png";
+let img2 = new Image();
+img2.src = "asteroids/ast3.png";
+let img3 = new Image();
+img3.src = "asteroids/ast4.png";
+let img4 = new Image();
+img4.src = "asteroids/ast5.png";
+let img5 = new Image();
+img5.src = "asteroids/ast6.png";
+let img6 = new Image();
+img6.src = "asteroids/ast7.png";
+let img7 = new Image();
+img7.src = "asteroids/ast8.png";
+let img8 = new Image();
+img8.src = "asteroids/ast9.png";
+let img9 = new Image();
+img9.src = "asteroids/ast10.png";
+let img10 = new Image();
+img10.src = "asteroids/ast11.png";
+let img11 = new Image();
+img11.src = "asteroids/ast12.png";
+let img12 = new Image();
+img12.src = "asteroids/ast13.png";
+
+
+let imgs = [img, img1, img2, img3, img4, img5, img6, img7, img8, img9, img10, img11, img12];
+
 
 const FRAMES_PER_SECOND = 60; // Valid values are 60,30,20,15,10...
 // set the mim time to render the next frame
@@ -54,9 +89,9 @@ var lastFrameTime = 0; // the last frame time
 class object {
   constructor(x, y, size, mass, x_v, y_v) {
     this.size = size;
-
+    this.imgIndex = Math.floor(Math.random() * imgs.length);
     this.mass = mass;
-
+    this.angle = Math.random() * Math.PI * 2;
     this.pos = {
       x: x,
       y: y,
@@ -68,7 +103,7 @@ class object {
   }
 
   calculateGravity(object) {
-    if(Math.hypot(this.pos.x - object.pos.x, this.pos.y - object.pos.y) < this.size + object.size){return}
+    if(Math.hypot(this.pos.x - object.pos.x, this.pos.y - object.pos.y) < this.size && Math.hypot(this.pos.x - object.pos.x, this.pos.y - object.pos.y) < object.size){return}
     if (this.pos !== object.pos) {
       let thismagnitude = (object.mass * gconst) / ((this.pos.x - object.pos.x) ** 2 + (this.pos.y - object.pos.y) ** 2);
       let objmagnitude = (this.mass * gconst) / ((this.pos.x - object.pos.x) ** 2 + (this.pos.y - object.pos.y) ** 2);
@@ -170,7 +205,9 @@ function renderObjects() {
         object.pos.y - player.pos.y + centerY,
       );
       rocket.beginPath();
-      rocket.arc(0, 0, object.size, 0, 2 * Math.PI);
+      rocket.rotate(object.angle);
+      rocket.drawImage(imgs[object.imgIndex], -object.size, -object.size, object.size * 2, object.size * 2);
+      
       rocket.fill();
       rocket.restore();
     }
@@ -353,18 +390,18 @@ let player = new object(0,0,100,0,0,0)
 let objects = [];
 
 
-
-for(let i=0;i<1;i++){
-    let rand = Math.random()+3
+objects.push(new object(0,0,0,300*10^20,0,0))
+for(let i=0;i<0;i++){
+    let rand = Math.random()*3
     let angle = Math.random()*Math.PI*2 - Math.PI
-    let dist = Math.random()*100000
+    let dist = Math.random()*100000+50000
     objects.push(new object(Math.floor(Math.cos(angle)*dist),Math.floor(Math.sin(angle)*dist),4000*rand,(rand**3)*300*10^9,0,0))
 }
-for(let i=0;i<20;i++){
-    let rand = Math.random()+0.5
+for(let i=0;i<1000;i++){
+    let rand = Math.random()*1.5
     let angle = Math.random()*Math.PI*2 - Math.PI
-    let dist = Math.random()*1000000
-    objects.push(new object(Math.floor(Math.cos(angle)*dist),Math.floor(Math.sin(angle)*dist),4000*rand,(rand**3)*300*10^9,-Math.floor(450000000000000*Math.sin(angle)/(dist**2)),Math.floor(450000000000000*Math.cos(angle)/(dist**2))))
+    let dist = Math.random()*1000000+50000
+    objects.push(new object(Math.floor(Math.cos(angle)*dist),Math.floor(Math.sin(angle)*dist),4000*rand,(rand**3)*300*10^9,-Math.floor(3000000*Math.sin(angle)/(Math.sqrt(dist))),Math.floor(3000000*Math.cos(angle)/(Math.sqrt(dist)))))
 }
    
 
@@ -391,6 +428,14 @@ function rotMat(angle) {
 
 function draw(time) {
   rocket.clearRect(0, 0, canvas.width, canvas.height);
+  // Performance checker: update pingValue with last frame time in ms
+  if (lastFrameTime) {
+    framems = time - lastFrameTime;
+    // write ms per frame to pingValue element
+    if (pingValue) pingValue.innerText = framems.toFixed(1) + " ms";
+  }
+  gamespeedValue.innerText = Math.round(gamespeed*(1000/(60*framems))*5)/5 + "x";;
+  lastFrameTime = time;
   let pattern = rocket.createPattern(img, "no-repeat");
   rocket.fillStyle = pattern;
   rocket.save();
@@ -497,12 +542,12 @@ function decreaseTime() {
     gamespeed = 1;
     
   }
-  gamespeedValue.innerText = gamespeed;
+  
 }
 
 function increaseTime() {
   gamespeed = gamespeed * 2;
-  gamespeedValue.innerText = gamespeed;
+
 }
 function switchMapMode() {
   if (mapmode) {
@@ -517,5 +562,13 @@ function switchMapMode() {
     mapmode = true;
   }
 }
+
+function setGravity(){
+  gconst = 10**(gravitySlider.value/10);
+  gravityVal.innerText = Math.round(gconst*10)/10;
+}
+
+gravitySlider.oninput = setGravity;
+
 
 requestAnimationFrame(draw);

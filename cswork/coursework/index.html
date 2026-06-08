@@ -13,7 +13,14 @@
         <button onclick="decreaseTime()"><</button><button onclick="increaseTime()">></button>
         <p>Speed: <span id="gamespeedValue">1</span></p>
         <p>Ping: <span id="pingValue">N/A</span></p>
-        <canvas id="myCanvas"  height="900px" width="1760px" style="border:1px solid #000000;"></canvas>
+        <canvas id="myCanvas"  height="1000" width="2000" style="border:1px solid #000000;"></canvas>
+
+        <div class="slidecontainer" style="position: absolute; top: 10px; left: 100px;">
+            <input type="range" min="-50" max="50" value="0" class="slider" id="myRange">
+            Gravity: <span id="gravityVal">1</span>
+
+            
+        </div>
     <script src="canvas.js">
         
     </script>
