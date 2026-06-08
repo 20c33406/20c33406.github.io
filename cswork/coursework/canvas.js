@@ -10,6 +10,7 @@ let boosting = false;
 let output = 0;
 let restitution = 0.5;
 let framems = 0;
+let astSpeed = 1;
 
 let c_down = false;
 let a_down = false;
@@ -31,6 +32,8 @@ const pingValue = document.getElementById("pingValue");
 const gravityVal = document.getElementById("gravityVal");
 const gravitySlider = document.getElementById("myRange");
 const gravityButton = document.getElementById("gravityButton");
+const speedInput = document.getElementById("speedInput");
+const speedVal = document.getElementById("speedVal");
 
 
 let scale = 0.005;
@@ -390,19 +393,8 @@ let player = new object(0,0,100,0,0,0)
 let objects = [];
 
 
-objects.push(new object(0,0,0,300*10^20,0,0))
-for(let i=0;i<0;i++){
-    let rand = Math.random()*3
-    let angle = Math.random()*Math.PI*2 - Math.PI
-    let dist = Math.random()*100000+50000
-    objects.push(new object(Math.floor(Math.cos(angle)*dist),Math.floor(Math.sin(angle)*dist),4000*rand,(rand**3)*300*10^9,0,0))
-}
-for(let i=0;i<1000;i++){
-    let rand = Math.random()*1.5
-    let angle = Math.random()*Math.PI*2 - Math.PI
-    let dist = Math.random()*1000000+50000
-    objects.push(new object(Math.floor(Math.cos(angle)*dist),Math.floor(Math.sin(angle)*dist),4000*rand,(rand**3)*300*10^9,-Math.floor(3000000*Math.sin(angle)/(Math.sqrt(dist))),Math.floor(3000000*Math.cos(angle)/(Math.sqrt(dist)))))
-}
+
+
    
 
 
@@ -568,7 +560,27 @@ function setGravity(){
   gravityVal.innerText = Math.round(gconst*10)/10;
 }
 
-gravitySlider.oninput = setGravity;
+function setSpeed(){
+  astSpeed = parseFloat(document.getElementById("speedInput").value);
+  speedVal.innerText = astSpeed;
+}
 
+function createGame(){
+  objects = []
+  for(let i=0;i<0;i++){
+    let rand = Math.random()*3
+    let angle = Math.random()*Math.PI*2 - Math.PI
+    let dist = Math.random()*100000+50000
+    objects.push(new object(Math.floor(Math.cos(angle)*dist),Math.floor(Math.sin(angle)*dist),4000*rand,(rand**3)*300*10^9,0,0))
+  }
+  for(let i=0;i<1000;i++){
+    let rand = Math.random()*1.5
+    let angle = Math.random()*Math.PI*2 - Math.PI
+    let dist = Math.random()*1000000+50000
+    objects.push(new object(Math.floor(Math.cos(angle)*dist),Math.floor(Math.sin(angle)*dist),4000*rand,(rand**3)*300*10^9,-Math.floor(astSpeed*3000000*Math.sin(angle)/(Math.sqrt(dist))),Math.floor(astSpeed*3000000*Math.cos(angle)/(Math.sqrt(dist)))))
+  }
+}
+gravitySlider.oninput = setGravity;
+speedInput.oninput = setSpeed;
 
 requestAnimationFrame(draw);
