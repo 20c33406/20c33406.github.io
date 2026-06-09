@@ -34,6 +34,8 @@ const gravitySlider = document.getElementById("myRange");
 const gravityButton = document.getElementById("gravityButton");
 const speedInput = document.getElementById("speedInput");
 const speedVal = document.getElementById("speedVal");
+const astCount = document.getElementById("astCount");
+const astCountVal = document.getElementById("astCountVal");
 
 
 let scale = 0.005;
@@ -567,13 +569,13 @@ function setSpeed(){
 
 function createGame(){
   objects = []
-  for(let i=0;i<0;i++){
+  for(let i=0;i<10;i++){
     let rand = Math.random()*3
     let angle = Math.random()*Math.PI*2 - Math.PI
     let dist = Math.random()*100000+50000
     objects.push(new object(Math.floor(Math.cos(angle)*dist),Math.floor(Math.sin(angle)*dist),4000*rand,(rand**3)*300*10^9,0,0))
   }
-  for(let i=0;i<1000;i++){
+  for(let i=0;i<astCount.value*10;i++){
     let rand = Math.random()*1.5
     let angle = Math.random()*Math.PI*2 - Math.PI
     let dist = Math.random()*1000000+50000
@@ -582,5 +584,9 @@ function createGame(){
 }
 gravitySlider.oninput = setGravity;
 speedInput.oninput = setSpeed;
+astCount.oninput = function() {
+  astCountVal.innerText = astCount.value;
+};
 
+createGame()
 requestAnimationFrame(draw);

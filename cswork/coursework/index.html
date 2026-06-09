@@ -23,10 +23,15 @@
         </div>
         <div id="gameCreation"style="justify-content: center; align-items: center; display: flex; position: absolute; top: 2.5%; left: 50%; transform: translate(-50%, -50%);">
             <button onclick="createGame()" >Start Game</button>
-            <input type="range" min="-50" max="50" value="0" class="slider" id="speedInput">
+            <input type="range" min="0" max="50" value="1" class="slider" id="speedInput">
             Speed: <span id="speedVal">1</span>
             
+            <input type="range" min="0" max="50" value="1" class="slider" id="astCount">
+            Asteroids: <span id="astCountVal">1</span>
+            
         </div>
+        </div>
+        
     <script src="canvas.js">
         
     </script>
