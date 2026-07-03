@@ -1,4 +1,4 @@
-let rotation = 0;
+let rotation = 1;
 const rotspeed = 0.001;
 let Y_Velocity = 10;
 let X_Velocity = 0;
@@ -37,7 +37,6 @@ const speedVal = document.getElementById("speedVal");
 const astCount = document.getElementById("astCount");
 const astCountVal = document.getElementById("astCountVal");
 
-
 let scale = 0.005;
 const el = document.querySelector("body");
 
@@ -51,8 +50,6 @@ let Y_pos = 0;
 let newangle = 0;
 let ogangle = 0;
 let diff = 0;
-
-
 
 let img = new Image();
 img.src = "asteroids/ast1.png";
@@ -81,9 +78,21 @@ img11.src = "asteroids/ast12.png";
 let img12 = new Image();
 img12.src = "asteroids/ast13.png";
 
-
-let imgs = [img, img1, img2, img3, img4, img5, img6, img7, img8, img9, img10, img11, img12];
-
+let imgs = [
+  img,
+  img1,
+  img2,
+  img3,
+  img4,
+  img5,
+  img6,
+  img7,
+  img8,
+  img9,
+  img10,
+  img11,
+  img12,
+];
 
 const FRAMES_PER_SECOND = 60; // Valid values are 60,30,20,15,10...
 // set the mim time to render the next frame
@@ -108,10 +117,21 @@ class object {
   }
 
   calculateGravity(object) {
-    if(Math.hypot(this.pos.x - object.pos.x, this.pos.y - object.pos.y) < this.size && Math.hypot(this.pos.x - object.pos.x, this.pos.y - object.pos.y) < object.size){return}
+    if (
+      Math.hypot(this.pos.x - object.pos.x, this.pos.y - object.pos.y) <
+        this.size &&
+      Math.hypot(this.pos.x - object.pos.x, this.pos.y - object.pos.y) <
+        object.size
+    ) {
+      return;
+    }
     if (this.pos !== object.pos) {
-      let thismagnitude = (object.mass * gconst) / ((this.pos.x - object.pos.x) ** 2 + (this.pos.y - object.pos.y) ** 2);
-      let objmagnitude = (this.mass * gconst) / ((this.pos.x - object.pos.x) ** 2 + (this.pos.y - object.pos.y) ** 2);
+      let thismagnitude =
+        (object.mass * gconst) /
+        ((this.pos.x - object.pos.x) ** 2 + (this.pos.y - object.pos.y) ** 2);
+      let objmagnitude =
+        (this.mass * gconst) /
+        ((this.pos.x - object.pos.x) ** 2 + (this.pos.y - object.pos.y) ** 2);
       let angle = Math.atan2(
         object.pos.y - this.pos.y,
         object.pos.x - this.pos.x,
@@ -211,8 +231,14 @@ function renderObjects() {
       );
       rocket.beginPath();
       rocket.rotate(object.angle);
-      rocket.drawImage(imgs[object.imgIndex], -object.size, -object.size, object.size * 2, object.size * 2);
-      
+      rocket.drawImage(
+        imgs[object.imgIndex],
+        -object.size,
+        -object.size,
+        object.size * 2,
+        object.size * 2,
+      );
+
       rocket.fill();
       rocket.restore();
     }
@@ -319,7 +345,7 @@ function calculateAcceleration() {
 
   /*
     if(c_down){
-        
+
         if(X_Velocity>0){
             X_Velocity-=acceleration
         } else if (X_Velocity<0){
@@ -342,7 +368,6 @@ function doObjectAccelerations() {
       let that = objects[j];
       curr.calculateGravity(that);
       curr.checkCollisions(that);
-      
     }
   }
 }
@@ -390,15 +415,8 @@ function calculateRotation() {
   }
 }
 
-
-let player = new object(0,0,100,0,0,0)
+let player = new object(0, 0, 100, 0, 0, 0);
 let objects = [];
-
-
-
-
-   
-
 
 function matMult(m1, m2) {
   return [
@@ -428,7 +446,8 @@ function draw(time) {
     // write ms per frame to pingValue element
     if (pingValue) pingValue.innerText = framems.toFixed(1) + " ms";
   }
-  gamespeedValue.innerText = Math.round(gamespeed*(1000/(60*framems))*5)/5 + "x";;
+  gamespeedValue.innerText =
+    Math.round(gamespeed * (1000 / (60 * framems)) * 5) / 5 + "x";
   lastFrameTime = time;
   let pattern = rocket.createPattern(img, "no-repeat");
   rocket.fillStyle = pattern;
@@ -445,7 +464,7 @@ function draw(time) {
     renderRocket();
     rocket.restore();
   }
-  
+
   for (let times = 0; times < gamespeed; times++) {
     doObjectAccelerations();
     player.updatePos();
@@ -534,14 +553,11 @@ function decreaseTime() {
   gamespeed = gamespeed / 2;
   if (gamespeed < 1) {
     gamespeed = 1;
-    
   }
-  
 }
 
 function increaseTime() {
   gamespeed = gamespeed * 2;
-
 }
 function switchMapMode() {
   if (mapmode) {
@@ -557,36 +573,54 @@ function switchMapMode() {
   }
 }
 
-function setGravity(){
-  gconst = 10**(gravitySlider.value/10);
-  gravityVal.innerText = Math.round(gconst*10)/10;
+function setGravity() {
+  gconst = 10 ** (gravitySlider.value / 10);
+  gravityVal.innerText = Math.round(gconst * 10) / 10;
 }
 
-function setSpeed(){
+function setSpeed() {
   astSpeed = parseFloat(document.getElementById("speedInput").value);
   speedVal.innerText = astSpeed;
 }
 
-function createGame(){
-  objects = []
-  for(let i=0;i<10;i++){
-    let rand = Math.random()*3
-    let angle = Math.random()*Math.PI*2 - Math.PI
-    let dist = Math.random()*100000+50000
-    objects.push(new object(Math.floor(Math.cos(angle)*dist),Math.floor(Math.sin(angle)*dist),4000*rand,(rand**3)*300*10^9,0,0))
+function createGame() {
+  objects = [];
+  for (let i = 0; i < 10; i++) {
+    let rand = Math.random() * 3;
+    let angle = Math.random() * Math.PI * 2 - Math.PI;
+    let dist = Math.random() * 100000 + 50000;
+    objects.push(
+      new object(
+        Math.floor(Math.cos(angle) * dist),
+        Math.floor(Math.sin(angle) * dist),
+        4000 * rand,
+        (rand ** 3 * 300 * 10) ^ 9,
+        0,
+        0,
+      ),
+    );
   }
-  for(let i=0;i<astCount.value*10;i++){
-    let rand = Math.random()*1.5
-    let angle = Math.random()*Math.PI*2 - Math.PI
-    let dist = Math.random()*1000000+50000
-    objects.push(new object(Math.floor(Math.cos(angle)*dist),Math.floor(Math.sin(angle)*dist),4000*rand,(rand**3)*300*10^9,-Math.floor(astSpeed*3000000*Math.sin(angle)/(Math.sqrt(dist))),Math.floor(astSpeed*3000000*Math.cos(angle)/(Math.sqrt(dist)))))
+  for (let i = 0; i < astCount.value * 10; i++) {
+    let rand = Math.random() * 1.5;
+    let angle = Math.random() * Math.PI * 2 - Math.PI;
+    let dist = Math.random() * 1000000 + 50000;
+    objects.push(
+      new object(
+        Math.floor(Math.cos(angle) * dist),
+        Math.floor(Math.sin(angle) * dist),
+        4000 * rand,
+        (rand ** 3 * 300 * 10) ^ 9,
+        -Math.floor((astSpeed * 3000000 * Math.sin(angle)) / Math.sqrt(dist)),
+        Math.floor((astSpeed * 3000000 * Math.cos(angle)) / Math.sqrt(dist)),
+      ),
+    );
   }
 }
 gravitySlider.oninput = setGravity;
 speedInput.oninput = setSpeed;
-astCount.oninput = function() {
+astCount.oninput = function () {
   astCountVal.innerText = astCount.value;
 };
 
-createGame()
+createGame();
 requestAnimationFrame(draw);
