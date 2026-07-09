@@ -1,4 +1,4 @@
-let rotation = 1;
+let rotation = 0;
 const rotspeed = 0.001;
 let Y_Velocity = 10;
 let X_Velocity = 0;
@@ -610,8 +610,8 @@ function createGame() {
         Math.floor(Math.sin(angle) * dist),
         4000 * rand,
         (rand ** 3 * 300 * 10) ^ 9,
-        -Math.floor((astSpeed * 3000000 * Math.sin(angle)) / Math.sqrt(dist)),
-        Math.floor((astSpeed * 3000000 * Math.cos(angle)) / Math.sqrt(dist)),
+        -Math.floor((astSpeed * 300000 * Math.sin(angle)) / Math.sqrt(dist)),
+        Math.floor((astSpeed * 300000 * Math.cos(angle)) / Math.sqrt(dist)),
       ),
     );
   }
