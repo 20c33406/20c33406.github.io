@@ -6,7 +6,7 @@
         <title>
             Space Sim
         </title>
-        
+
         <link rel="stylesheet" type="text/css" href="style.css">
     </head>
     <body>
@@ -16,24 +16,24 @@
         <canvas id="myCanvas"  height="1000" width="2000" style="border:1px solid #000000;"></canvas>
 
         <div class="slidecontainer" style="position: absolute; top: 10px; left: 100px;">
-            <input type="range" min="-50" max="50" value="0" class="slider" id="myRange">
-            Gravity: <span id="gravityVal">1</span>
+            <input type="range" min="-19" max="-3" value="-3" class="slider" id="myRange">
+            Gravity: <span id="gravityVal">-3</span>
 
-            
+
         </div>
         <div id="gameCreation"style="justify-content: center; align-items: center; display: flex; position: absolute; top: 2.5%; left: 50%; transform: translate(-50%, -50%);">
             <button onclick="createGame()" >Start Game</button>
-            <input type="range" min="0" max="50" value="1" class="slider" id="speedInput">
-            Speed: <span id="speedVal">1</span>
-            
-            <input type="range" min="0" max="50" value="1" class="slider" id="astCount">
-            Asteroids: <span id="astCountVal">1</span>
-            
+            <input type="range" min="0" max="50" value="50" class="slider" id="speedInput">
+            Speed: <span id="speedVal">50</span>
+
+            <input type="range" min="0" max="50" value="25" class="slider" id="astCount">
+            Asteroids: <span id="astCountVal">25</span>
+
         </div>
         </div>
-        
+
     <script src="canvas.js">
-        
+
     </script>
     </body>
 </html>

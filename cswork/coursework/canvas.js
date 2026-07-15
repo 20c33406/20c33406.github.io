@@ -4,7 +4,7 @@ let Y_Velocity = 10;
 let X_Velocity = 0;
 const acceleration = 1; // The real life equivalent would be 60* this number
 const translation = 0.006;
-let gconst = 1000;
+let gconst = 1.67 * (10 ** -11);
 let gamespeed = 1;
 let boosting = false;
 let output = 0;
@@ -37,7 +37,7 @@ const speedVal = document.getElementById("speedVal");
 const astCount = document.getElementById("astCount");
 const astCountVal = document.getElementById("astCountVal");
 
-let scale = 0.005;
+let scale = 0.0005;
 const el = document.querySelector("body");
 
 let angle = 0;
@@ -574,8 +574,8 @@ function switchMapMode() {
 }
 
 function setGravity() {
-  gconst = 10 ** (gravitySlider.value / 10);
-  gravityVal.innerText = Math.round(gconst * 10) / 10;
+  gconst = 1.67 * (10 ** gravitySlider.value);
+  gravityVal.innerText = gravitySlider.value;
 }
 
 function setSpeed() {
@@ -584,34 +584,21 @@ function setSpeed() {
 }
 
 function createGame() {
+  setSpeed()
+  setGravity()
   objects = [];
-  for (let i = 0; i < 10; i++) {
-    let rand = Math.random() * 3;
-    let angle = Math.random() * Math.PI * 2 - Math.PI;
-    let dist = Math.random() * 100000 + 50000;
-    objects.push(
-      new object(
-        Math.floor(Math.cos(angle) * dist),
-        Math.floor(Math.sin(angle) * dist),
-        4000 * rand,
-        (rand ** 3 * 300 * 10) ^ 9,
-        0,
-        0,
-      ),
-    );
-  }
-  for (let i = 0; i < astCount.value * 10; i++) {
+  for (let i = 0; i < astCount.value * 20; i++) {
     let rand = Math.random() * 1.5;
     let angle = Math.random() * Math.PI * 2 - Math.PI;
-    let dist = Math.random() * 1000000 + 50000;
+    let dist = (Math.random()+1) * 500000;
     objects.push(
       new object(
         Math.floor(Math.cos(angle) * dist),
         Math.floor(Math.sin(angle) * dist),
         4000 * rand,
-        (rand ** 3 * 300 * 10) ^ 9,
-        -Math.floor((astSpeed * 300000 * Math.sin(angle)) / Math.sqrt(dist)),
-        Math.floor((astSpeed * 300000 * Math.cos(angle)) / Math.sqrt(dist)),
+        (rand ** 2) * 300 * (10 ** 9),
+        -Math.sqrt((500 * astSpeed * gconst * astCount.value * 20 * 300 * (10 ** 9)) / dist) * Math.sin(angle),
+        Math.sqrt((500 *astSpeed * gconst * astCount.value * 20 * 300 * (10 ** 9)) / dist) * Math.cos(angle),
       ),
     );
   }
