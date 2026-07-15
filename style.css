@@ -2,7 +2,7 @@ body {
   font-family: 'Century Gothic';
   background-color: #404040;
   color:#cfcfcf;
-  
+
 }
 
 .active {
@@ -31,7 +31,7 @@ body {
   background-color: #333333;
   float: right;
   font-size: 20px;
-  
+
 }
 nav a:hover {
   background-color: #111111;
@@ -46,7 +46,7 @@ p {
   font-size: 20px;
 }
 a {
-  
+
   color: white;
   padding: 14px 16px;
   margin-left:5px;
@@ -54,7 +54,7 @@ a {
   border: 2px solid #cfcfcf;
   border-radius: 20px;
   background-color: #333333;
-  
+
   font-size: 20px;
-  
+
 }
