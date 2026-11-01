@@ -1,0 +1,28 @@
+
+
+body {
+    background-color: #696969;
+}
+
+input {
+    width: 4em;
+}
+
+
+
+.configs .card {
+    display: inline-block;
+    width: 16.9em;
+    height: 21em;
+    border: 1px solid #666;
+    border-radius: 1.5em;
+    padding: .25em;
+    margin: .2em .2em .2em .2em;
+    text-align: center;
+    font-size: 18px;
+    font-weight: normal;
+    font-family: Arial, sans-serif;
+    position: relative;
+    background-color: #fff;
+    box-shadow: .2em .2em .5em #333;
+}

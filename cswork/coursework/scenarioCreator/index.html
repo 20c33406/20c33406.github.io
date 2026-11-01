@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <button onclick="location.href = '/index.html';">Main Game</button>
+        <button onclick="createCard()">New Card</button>
+        <button onclick="copyConfig()">Copy Config</button>
+        <input id="configInput">
+        <button onclick="loadConfig()">Load Config</button>
+        <input type="checkbox" id="player" checked> Player
+        <input type="checkbox" id="gravity" checked> Gravity
+        <input type="checkbox" id="collisions" checked> Collisions
+        <br>
+        <br>
+
+
+        <div class="configs" id="configs">
+
+            <div class="card" hidden>
+                <p>Config Card</p>
+                <label>
+                    Size:
+                    <input name="size" type="number"/> * 10^<input name="sizepow" type="number"/>
+                </label>
+                <br>
+                <br>
+                <label>
+                    Mass:
+                    <input name="mass" type="number"/> * 10^<input name="masspow" type="number"/>
+                </label>
+                <br>
+                <br>
+                <label>
+                    Position:
+                    <br>
+                    X:<input name="xpos" type="number"/> * 10^<input name="xpospow" type="number"/>
+                    <br>
+                    Y:<input name="ypos" type="number"/> * 10^<input name="ypospow" type="number"/>
+                </label>
+                <br>
+                <br>
+                <label>
+                    Velocity:
+                    <br>
+                    X:<input name="xvel" type="number"/> * 10^<input name="xvelpow" type="number"/>
+                    <br>
+                    Y:<input name="yvel" type="number"/> * 10^<input name="yvelpow" type="number"/>
+                </label>
+                <br>
+                <br>
+                <label>
+                    Colour:
+                    <input name="colour" />
+                </label>
+
+            </div>
+
+        </div>
+        <script src='script.js'></script>
+    </body>
+</html>
