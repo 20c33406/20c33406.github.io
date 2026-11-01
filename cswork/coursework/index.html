@@ -1,39 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        <link rel="stylesheet" href="style.css">
 
-        <meta charset="UTF-8">
-        <title>
-            Space Sim
-        </title>
-
-        <link rel="stylesheet" type="text/css" href="style.css">
     </head>
-    <body>
-        <button onclick="decreaseTime()"><</button><button onclick="increaseTime()">></button>
-        <p>Speed: <span id="gamespeedValue">1</span></p>
-        <p>Ping: <span id="pingValue">N/A</span></p>
-        <canvas id="myCanvas"  height="1000" width="2000" style="border:1px solid #000000;"></canvas>
+    <body id="body">
 
-        <div class="slidecontainer" style="position: absolute; top: 10px; left: 100px;">
-            <input type="range" min="-19" max="-3" value="-3" class="slider" id="myRange">
-            Gravity: <span id="gravityVal">-3</span>
+        <div id="parent" style="display:flex" >
 
+            <div id="Config Control" style="margin-right:20px">
+                <input id="configInput">
+                <button onclick="loadConfig()">Load Config</button>
+                <br>
+                <button onclick="location.href = '/scenarioCreator/index.html';">Scenario Creator</button>
+            </div>
+            <div id="speedControls" style="margin-right:20px">
+                <button onclick="decreaseTime()"><</button>
+                <button onclick="increaseTime()">></button>
+                <p>Game Speed: <span id="gameSpeedValue">1</span>x</p>
+            </div>
 
+            <div id="rocketControls">
+                <input type="radio" name="rocketControls" value="pg" id="pg">Prograde
+                <input type="radio" name="rocketControls" value="rg" id="rg">Retrograde
+                <input type="radio" name="rocketControls" value="na" id="na" checked>N/A
+                <br>
+                <input type="radio" name="rocketControls" value="no" id="no">Normal
+                <input type="radio" name="rocketControls" value="an" id="an">Anti-normal
+                <br>
+                <input type="radio" name="rocketControls" value="ri" id="ri">Radial-in
+                <input type="radio" name="rocketControls" value="ro" id="ro">Radial-out
+                <br>
+                <button onclick="checkControls()">Submit</button>
+            </div>
         </div>
-        <div id="gameCreation"style="justify-content: center; align-items: center; display: flex; position: absolute; top: 2.5%; left: 50%; transform: translate(-50%, -50%);">
-            <button onclick="createGame()" >Start Game</button>
-            <input type="range" min="0" max="50" value="50" class="slider" id="speedInput">
-            Speed: <span id="speedVal">50</span>
-
-            <input type="range" min="0" max="50" value="25" class="slider" id="astCount">
-            Asteroids: <span id="astCountVal">25</span>
-
+        <div id="container" class="container">
+            <canvas id="myCanvas" height="1000" width="2000"></canvas>
         </div>
-        </div>
-
-    <script src="canvas.js">
-
-    </script>
+        <script src="script.js"></script>
     </body>
 </html>
