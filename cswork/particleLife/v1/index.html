@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="stylesheet" href="style.css">
+
+    </head>
+    <body id="body">
+
+        <div id="parent" style="display:flex" >
+
+            <div id="speedControls" style="margin-right:20px">
+
+                <button onclick="decreaseTime()"><</button>
+                <button onclick="increaseTime()">></button>
+                <p>Game Speed: <span id="gameSpeedValue">1</span>x</p>
+                Num of Colours: <input id="colourNum">
+                Num of Objects: <input id="objectNum">
+                <button id="start">Start</button>
+            </div>
+            <div class="slidecontainer" style="position: absolute; top: 10px; left: 150px;">
+                <input type="range" min="10" max="100" value="50" class="slider" id="minDist">
+                Min Dist
+            </div>
+            <div class="slidecontainer" style="position: absolute; top: 10px; left: 380px;">
+                <input type="range" min="100" max="1000" value="500" class="slider" id="maxRange">
+                Max Range
+            </div>
+            <div class="slidecontainer" style="position: absolute; top: 45px; left: 150px;">
+                <input type="range" min="500" max="10000" value="1000" class="slider" id="forceMult">
+                Force Mult
+            </div>
+            <div class="slidecontainer" style="position: absolute; top: 45px; left: 380px;">
+                <input type="range" min="0" max="500" value="100" class="slider" id="resistance">
+                Resistance
+            </div>
+
+        </div>
+
+        <div id="container" class="container">
+            <canvas id="myCanvas" height="1000" width="2000"></canvas>
+        </div>
+        <script src="script.js"></script>
+    </body>
+</html>

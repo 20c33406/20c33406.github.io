@@ -1,0 +1,22 @@
+canvas {
+    background-color: rgb(0, 0, 0);
+    border: 2px solid rgb(150, 150, 150);
+    width: auto;
+    height:100%;
+
+
+
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 97vh;
+
+}
+
+body {
+    background-color: #696969;
+    overflow:hidden;
+}

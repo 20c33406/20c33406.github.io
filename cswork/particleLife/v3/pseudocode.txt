@@ -1,0 +1,179 @@
+CANVAS = HTML Canvas element
+CTX = canvas.getContext("2d")
+angle = 0
+G = 1.67*10**-11
+
+procedure drawRect()
+    draw a
+
+
+class Vector
+    public X
+    public Y
+    public procedure new(v_x,v_y)
+        this.X=v_x
+        this.Y=v_y
+    endprocedure
+    procedure addVector(vector)
+        this.X += vector.X
+        this.Y += vector.Y
+    endprocedure
+
+    procedure setZero()
+        this.X = 0
+        this.Y = 0
+    endprocedure
+endclass
+
+class Object
+    [CREATE PRIVATE ATTRIBUTES]
+    public procedure new(color,mass,size,pos,vel,acc)
+        [ASSIGN ALL ATTRIBUTES TO PARAMETERS OF CONSTRUCTOR BY USING OBJECTS FOR THE 2D VECTORS]
+    endprocedure
+
+
+endclass
+
+objects = []
+objects.push(new Object())
+procedure renderObjects()
+    for i=0 to objects.length
+        [RENDER OBJECT AS CIRCLE AT COORDINATES]
+    next i
+endprocedure
+
+class Player inherits object
+    [CREATE PRIVATE ATTRIBUTES]
+    public angle
+    public angularVelocity
+    public thrust
+    public acceleration
+    public procedure new(color,mass,size,pos,vel,acc, acceleration)
+        [ASSIGN ALL ATTRIBUTES TO PARAMETERS OF CONSTRUCTOR BY USING OBJECTS FOR THE 2D VECTORS]
+        this.angle = 0
+        this.angularVelocity = 0
+        this.thrust = 0
+        this.acceleration = acceleration
+    endprocedure
+
+    public procedure applyRocketControls
+        [IF ANY OF THE CONTROL KEYS ARE PRESSED, APPLY THE CORRECT RESULT]
+    endprocedure
+endclass
+
+procedure draw()
+    [RENDER CURRENT FRAME]
+    for i=0 to gameSpeed
+        [RUN FRAME CALCULATIONS]
+    next i
+endprocedure
+
+public procedure applyGravity(object)
+    dist = [DISTANCE FROM THIS TO OBJECT]
+    angle = [ANGLE FROM THIS TO OBJECT]
+
+    this.acc.X += [CALCULATE CORRECT ACCELERATION]
+    this.acc.Y += [CALCULATE CORRECT ACCELERATION]
+
+    object.acc.X += [CALCULATE CORRECT ACCELERATION]
+    object.acc.Y += [CALCULATE CORRECT ACCELERATION]
+endprocedure
+
+for i=0 to objects.length
+    for j=i+1 to objects.length
+        objects[i].checkCollision(objects[j)
+    next j
+next i
+
+
+procedure updateObjects()
+  for i=0 to objects.length
+    [ADD HALF THE ACCELERATION TO THE VELOCITY]
+
+    [ADD THE VELOCITIES TO THE POSITIONS]
+  next i
+
+  [CALCULATE THE NEW ACCELERATIONS]
+
+  for i=0 to objects.length
+    [ADD HALF THE NEW ACCELERATION TO THE VELOCITY]
+  next i
+endprocedure
+
+procedure applyPhysics()
+    for i=0 to objects.length
+        for j=i+1 to objects.length
+            [CALULATE COLLISION BETWEEN I AND J]
+        next j
+    next i
+endprocedure
+
+procedure renderSymbols()
+    for i=0 to objects.length
+        if objects[i].radius * scale < minumumRadius
+            [RENDER OBJECT SYMBOL ON SCREEN]
+        endif
+    next i
+endprocedure
+
+[ON SCROLL UP]
+    scale/=scaleFactor
+end
+
+[ON SCROLL DOWN]
+    scale *= scaleFactor
+end
+
+
+function calculateEnergy(){
+  let total=0;
+  for (let i = 0; i < objects.length; i++){
+
+    kinetic = 0.5 * objects[i].mass * ((Math.hypot(objects[i].vel.Y, objects[i].vel.X))**2)
+    for (let j = i + 1; j < objects.length; j++){
+      let dist = Math.hypot(objects[i].pos.X - objects[j].pos.X, objects[i].pos.Y - objects[j].pos.Y);
+      grav = (GCONST * objects[i].mass * objects[j].mass) / dist
+      total -= grav
+    }
+    total += kinetic
+  }
+  energy.innerText = total
+}
+
+procedure checkControls()
+    [SET PLAYER SAS MODE TO CHECKED MODE IN THE UI]
+endprocedure
+
+switch sas
+    case [SAS MODE]:
+        angle = [CORRECT ANGLE BASED ON DIAGRAM]
+        angularVelocity = 0
+        break
+    case 'na':
+        break
+endswitch
+
+procedure newCard()
+    let configCards = [CONTAINER DIV FOR THE CARDS]
+    let templateCard = [FISRT TAG WITH CLASS CARD]
+    let newCard = [CLONE CARD TAG]
+    let inputs = [ALL INPUTS IN NEWCARD]
+    for i=0 to inputs.length
+        inputs[0].value = ''
+    next i
+    configCards.push(newCard)
+endprocedure
+
+procedure loadConfig(config)
+    [PARSE THE CONFIG STRING TO TURN IT INTO AN ARRAY]
+    for i=0 to config.length
+        [CREATE A NEW OBJECT USING THE PROPERTIES OF config[i]]
+        or
+        [CREATE A NEW CONFIG CARD USING THE PROPERTIES OF config[i]]
+    next i
+    [DELETE FIRST CONFIG CARD]
+endprocedure
+
+
+
+    
